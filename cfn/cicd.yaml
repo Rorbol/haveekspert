@@ -1,0 +1,462 @@
+---
+
+Metadata:
+
+  Authors:
+    Description: Joachim Rorbol (jr@efio.dk)
+
+  AWS::CloudFormation::Interface:
+
+    ParameterGroups:
+    - Label:
+        default: GitHub settings
+      Parameters:
+      - GitHubOwner
+      - RepositoryName
+      - BranchName
+      - BranchNameMatch
+      - GitHubToken
+      - GitHubTokenType 
+
+    - Label:
+        default: DO NOT TOUCH - used for bootstrap unly
+      Parameters:
+      - Vpc
+      - PrivateSubnets
+      - BastionSecurityGroup
+   
+    ParameterLabels:
+      GitHubOwner:
+        default: GitHub owner account
+      RepositoryName:
+        default: GitHub repository name
+
+Parameters:
+  RepositoryName:
+    Description: GitHub repository name
+    Type: String
+    Default: skysovs
+  GitHubOwner:
+    Type: String
+    Default: efio-dk
+  GitHubToken:
+    Type: String
+    NoEcho: true
+  GitHubTokenType:
+    Type: String
+    AllowedValues: [ "Secrers manager ARN", "Clear text" ]
+    Default: Clear text
+
+  BranchName:
+    Type: String
+  BranchNameMatch:
+    AllowedValues: [ "Equal", "Prefix" ]
+    Type: String
+
+  Vpc:
+    Type: String
+    Default: ""
+  PrivateSubnets:
+    Type: String
+    Default: ""
+  BastionSecurityGroup:
+    Type: String
+    Default: ""
+
+Conditions:
+  CreateCodebuildWebhook: !Equals [ "Prefix", !Ref BranchNameMatch ]
+  SetGitHubToken: !Equals [ "Clear text", !Ref GitHubTokenType ]
+
+  hasVpcEnabled: !And 
+    - !Not [ !Equals [ "", !Ref Vpc ] ]
+    - !Not [ !Equals [ "", !Ref PrivateSubnets ] ]
+    - !Not [ !Equals [ "", !Ref BastionSecurityGroup ] ]
+
+Resources:
+
+  GithubTokenSecret:
+    Condition: SetGitHubToken
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      # Name: !Sub ${AWS::StackName}/${GitHubOwner}/${RepositoryName}
+      Description: GitHub token for webhook
+      SecretString: !Sub '{"token": "${GitHubToken}"}'
+
+  CicdRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - Effect: "Allow"
+            Principal: 
+              Service:
+                - cloudformation.amazonaws.com
+                - codebuild.amazonaws.com
+                - codepipeline.amazonaws.com
+            Action: "sts:AssumeRole"
+      Description: PoC - NodeJS Lambda deployment pipeline Role
+      RoleName: !Sub '${AWS::StackName}-role'
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/PowerUserAccess
+      Policies:
+        - PolicyName: "IAMRolePolicyPermission"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - Effect: "Allow"
+                Action: 
+                  - iam:Get*
+                  - iam:List*
+                  - iam:Simulate*
+                  - iam:Create*
+                  - iam:Update*
+                  - iam:Delete*
+                  - iam:Put*
+                  - iam:Add*
+                  - iam:Remove*
+                  - iam:Attach*
+                  - iam:Detach*
+                  - iam:Tag*
+                  - iam:Untag*
+                  - iam:Pass*
+                Resource:
+                  - !Sub arn:aws:iam::${AWS::AccountId}:role/*
+                  - !Sub arn:aws:iam::${AWS::AccountId}:policy/*
+                  - !Sub arn:aws:iam::${AWS::AccountId}:instance-profile/*
+
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      AccessControl: Private
+      VersioningConfiguration:
+        Status: Enabled
+
+  SnsTopic:
+    Type: AWS::SNS::Topic
+    Properties: 
+      # DisplayName: String
+      # Subscription: 
+      #   - Subscription
+      # Tags: 
+      #   - Tag
+      TopicName: !Sub ${AWS::StackName}-topic
+
+  NotificationRule:
+    Type: AWS::CodeStarNotifications::NotificationRule
+    Properties: 
+      DetailType: BASIC
+      EventTypeIds: 
+        - codepipeline-pipeline-manual-approval-succeeded
+        - codepipeline-pipeline-pipeline-execution-canceled
+        - codepipeline-pipeline-pipeline-execution-failed
+        - codepipeline-pipeline-manual-approval-needed
+        - codepipeline-pipeline-manual-approval-failed
+      Name: !Sub ${AWS::StackName}-FeatureNotification
+      Resource: !Sub arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:${Pipeline}
+      Status: ENABLED
+      Targets: 
+        - TargetType: SNS 
+          TargetAddress: !Ref SnsTopic
+
+  Pipeline: 
+    Type: AWS::CodePipeline::Pipeline 
+    Properties: 
+      Name: !Sub ${AWS::StackName}
+      RoleArn: !GetAtt [ CicdRole, Arn ]
+      RestartExecutionOnUpdate: true
+      ArtifactStore:
+        Type: S3 
+        Location: !Ref ArtifactBucket
+      Stages:
+        # Source stage
+        - Name: Source
+          Actions:
+          - Name: Source
+            Namespace: SourceVariables
+            ActionTypeId:
+              Category: Source
+              Owner: ThirdParty
+              Version: '1'
+              Provider: GitHub
+            Configuration:
+              Owner: !Ref GitHubOwner
+              Repo: !Ref RepositoryName
+              PollForSourceChanges: 'false'
+              Branch: master
+              OAuthToken: !Sub
+                - '{{resolve:secretsmanager:${Token}:SecretString:token}}'
+                - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
+            OutputArtifacts:
+            - Name: source
+            RunOrder: 1
+
+        # Static code analysis stage
+        - Name: StaticCodeAnalysis
+          Actions:
+          - Name: cfn-lint
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Test
+              Owner: AWS
+              Version: '1'
+              Provider: CodeBuild
+            Configuration:
+              ProjectName: !Sub ${AWS::StackName}-cfn-lint
+            RunOrder: 1
+
+          - Name: cfn-nag
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Test
+              Owner: AWS
+              Version: '1'
+              Provider: CodeBuild
+            Configuration:
+              ProjectName: !Sub ${AWS::StackName}-cfn-nag
+            RunOrder: 1
+
+        # Release infrastructure
+        - Name: DeployWebsite
+          Actions:
+          - Name: updatePipelineWithVpc
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Version: '1'
+              Provider: CloudFormation
+            Configuration:
+              ActionMode: CREATE_UPDATE
+              RoleArn:  !GetAtt [ CicdRole, Arn ] 
+              Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+              StackName: !Ref AWS::StackName
+              OutputFileName: pipeline
+              TemplatePath: source::cfn/pipeline.yaml
+              ParameterOverrides: !Sub
+                - |
+                  {
+                    "RepositoryName": "${RepositoryName}",
+                    "GitHubOwner": "${GitHubOwner}",
+                    "GitHubToken": "${Token}",
+                    "GitHubTokenType": "Secrers manager ARN" ,
+                    "BranchName": "${BranchName}",
+                    "BranchNameMatch": "${BranchNameMatch}",
+                    "BranchName": "${BranchName}",
+
+
+
+                    "Vpc": "#{InfrastructureStack.Vpc}",
+                    "PrivateSubnets": "#{InfrastructureStack.PrivateSubnets}",
+                    "BastionSecurityGroup": "#{InfrastructureStack.BastionSecurityGroup}"
+
+                  }
+                - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
+            OutputArtifacts: []
+            RunOrder: 1
+
+
+          # - Name: infrastructure-cfn-stack
+          #   Namespace: InfrastructureStack
+          #   InputArtifacts:
+          #   - Name: source
+          #   ActionTypeId:
+          #     Category: Deploy
+          #     Owner: AWS
+          #     Version: '1'
+          #     Provider: CloudFormation
+          #   Configuration:
+          #     ActionMode: CREATE_UPDATE
+          #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
+          #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+          #     StackName: infrastructure
+          #     OutputFileName: deployoutput
+          #     TemplatePath: source::cfn/infrastructure.yaml
+          #     # ParameterOverrides: !Sub |
+          #     #   { "EC2KeyName": "${EC2KeyName}" }
+          #   OutputArtifacts: []
+          #   RunOrder: 2
+
+
+        # # Release services
+        # - Name: DeployServices
+        #   Actions:
+
+        #   - Name: hero-cfn-stack
+        #     InputArtifacts:
+        #     - Name: source
+        #     ActionTypeId:
+        #       Category: Deploy
+        #       Owner: AWS
+        #       Version: '1'
+        #       Provider: CloudFormation
+        #     Configuration:
+        #       ActionMode: CREATE_UPDATE
+        #       RoleArn:  !GetAtt [ CicdRole, Arn ] 
+        #       Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+        #       StackName: hero
+        #       OutputFileName: heroout
+        #       TemplatePath: source::cfn/hero.yaml
+        #       ParameterOverrides: |
+        #         {
+        #           "Vpc": "#{InfrastructureStack.Vpc}",
+        #           "PrivateSubnets": "#{InfrastructureStack.PrivateSubnets}",
+        #           "BastionSecurityGroup": "#{InfrastructureStack.BastionSecurityGroup}",
+        #           "DatabaseMasterPassword": "password"
+        #         }
+        #     OutputArtifacts: []
+        #     RunOrder: 1
+
+          # - Name: hero-sql-schema
+          #   InputArtifacts:
+          #   - Name: source
+          #   ActionTypeId:
+          #     Category: Build
+          #     Owner: AWS
+          #     Version: '1'
+          #     Provider: CodeBuild
+          #   Configuration:
+          #     ProjectName: !Sub ${AWS::StackName}-vpc-build
+          #   RunOrder: 2
+
+  CfnLintLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-lint
+      RetentionInDays: 7
+
+  CfnLintProject:
+    Type: AWS::CodeBuild::Project
+    Properties: 
+      Name: !Sub ${AWS::StackName}-cfn-lint
+      Description: Cloudformation linter
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-lint
+          Status: ENABLED
+      TimeoutInMinutes: 5
+      QueuedTimeoutInMinutes: 5
+      ServiceRole: !Ref CicdRole
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              runtime-versions:
+                python: latest
+              commands:
+                - pip install cfn-lint
+            build:
+              commands:
+                - cfn-lint --version
+                # - cfn-lint --help
+                - cfn-lint cfn/*.yaml
+          # artifacts:
+          #   discard-paths: yes
+          #   files:
+          #     cfn/**/*
+        Type: CODEPIPELINE
+
+  CfnNagLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-nag
+      RetentionInDays: 7
+
+  CfnNagProject:
+    Type: AWS::CodeBuild::Project
+    Properties: 
+      Name: !Sub ${AWS::StackName}-cfn-nag
+      Description: Cloudformation compliance-as-code
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-nag
+          Status: ENABLED
+      TimeoutInMinutes: 5
+      QueuedTimeoutInMinutes: 5
+      ServiceRole: !Ref CicdRole
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              runtime-versions:
+                ruby: latest
+              commands:
+                - gem install cfn-nag
+            build:
+              commands:
+                - cfn_nag_scan --version
+                - cfn_nag_scan --input-path cfn/
+        Type: CODEPIPELINE
+
+  # SqlLintLogGroup:
+  #   Type: AWS::Logs::LogGroup
+  #   Properties:
+  #     LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-sql-lint
+  #     RetentionInDays: 7
+
+  # SqlLintProject:
+  #   Type: AWS::CodeBuild::Project
+  #   Properties: 
+  #     Name: !Sub ${AWS::StackName}-sql-lint
+  #     Description: SQL linter
+  #     Artifacts:
+  #       Type: CODEPIPELINE
+  #     Environment:
+  #       Type: LINUX_CONTAINER
+  #       ComputeType: BUILD_GENERAL1_SMALL
+  #       Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+  #     LogsConfig:
+  #       CloudWatchLogs:
+  #         GroupName: !Sub /aws/codebuild/${AWS::StackName}-sql-lint
+  #         Status: ENABLED
+  #     TimeoutInMinutes: 5
+  #     QueuedTimeoutInMinutes: 5
+  #     ServiceRole: !Ref CicdRole
+  #     Source: 
+  #       BuildSpec: |
+  #         version: 0.2
+  #         phases:
+  #           install:
+  #             runtime-versions:
+  #               nodejs: latest
+  #             commands:
+  #               - npm install -g sql-lint
+  #           build:
+  #             commands:
+  #               - sql-lint --version
+  #               - sql-lint sql/hero-ddl.sql --driver mysql
+  #         artifacts:
+  #           discard-paths: yes
+  #           files:
+  #             ${artifactPath}**/*
+  #       Type: CODEPIPELINE
+  #     VpcConfig: !If
+  #       - hasVpcEnabled
+  #       - SecurityGroupIds: [ !Ref BastionSecurityGroup ]
+  #         Subnets: !Split [ ",", !Ref PrivateSubnets ]
+  #         VpcId: !Ref Vpc
+  #       - !Ref AWS::NoValue
