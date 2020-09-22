@@ -414,7 +414,7 @@ Resources:
       LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
       RetentionInDays: 7
 
-  SqlLintProject:
+  HugoBuildProject:
     Type: AWS::CodeBuild::Project
     Properties: 
       Name: !Sub ${AWS::StackName}-hugo-build
@@ -450,9 +450,4 @@ Resources:
             files:
               ${artifactPath}**/*
         Type: CODEPIPELINE
-      VpcConfig: !If
-        - hasVpcEnabled
-        - SecurityGroupIds: [ !Ref BastionSecurityGroup ]
-          Subnets: !Split [ ",", !Ref PrivateSubnets ]
-          VpcId: !Ref Vpc
-        - !Ref AWS::NoValue
+
