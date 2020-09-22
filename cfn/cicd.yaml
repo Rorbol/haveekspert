@@ -363,10 +363,6 @@ Resources:
                 - cfn-lint --version
                 # - cfn-lint --help
                 - cfn-lint cfn/*.yaml
-          # artifacts:
-          #   discard-paths: yes
-          #   files:
-          #     cfn/**/*
         Type: CODEPIPELINE
 
   CfnNagLogGroup:
@@ -437,14 +433,13 @@ Resources:
           version: 0.2
           phases:
             install:
-              runtime-versions:
-                nodejs: latest
+              # runtime-versions:
+              #   golang: latest
               commands:
-                - npm install -g sql-lint
+                - brew install hugo
             build:
               commands:
-                - sql-lint --version
-                - sql-lint sql/hero-ddl.sql --driver mysql
+                - cd site/ && hugo -D --destination ../static
           artifacts:
             discard-paths: yes
             files:
