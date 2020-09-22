@@ -53,7 +53,6 @@ Resources:
     UpdateReplacePolicy: Retain
     Type: AWS::SecretsManager::Secret
     Properties:
-      # Name: !Sub ${AWS::StackName}/${GitHubOwner}/${RepositoryName}
       Description: GitHub token for webhook
       SecretString: !Sub '{"token": "${GitHubToken}"}'
 
@@ -144,15 +143,17 @@ Resources:
     Type: AWS::CodePipeline::Webhook
     Properties:
       AuthenticationConfiguration: 
-        SecretToken: {{resolve:secretsmanager:MyGitHubSecret:SecretString:token}} 
+        SecretToken: !Sub
+          - '{{resolve:secretsmanager:${Token}:SecretString:token}}'
+          - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
       Filters: 
       - JsonPath: "$.ref" 
         MatchEquals: refs/heads/{Branch} 
       Authentication: GITHUB_HMAC 
-      TargetPipeline: !Ref WebhookPipeline
+      TargetPipeline: !Ref Pipeline
       TargetAction: Source 
-      Name: MyWebhook 
-      TargetPipelineVersion: !GetAtt WebhookPipeline.Version
+      Name: !Sub ${AWS::StackName}-Webhook 
+      TargetPipelineVersion: !GetAtt Pipeline.Version
       RegisterWithThirdParty: 'true'
 
 
