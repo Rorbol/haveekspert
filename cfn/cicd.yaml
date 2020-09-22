@@ -17,13 +17,6 @@ Metadata:
       - BranchNameMatch
       - GitHubToken
       - GitHubTokenType 
-
-    - Label:
-        default: DO NOT TOUCH - used for bootstrap unly
-      Parameters:
-      - Vpc
-      - PrivateSubnets
-      - BastionSecurityGroup
    
     ParameterLabels:
       GitHubOwner:
@@ -49,28 +42,9 @@ Parameters:
 
   BranchName:
     Type: String
-  BranchNameMatch:
-    AllowedValues: [ "Equal", "Prefix" ]
-    Type: String
-
-  Vpc:
-    Type: String
-    Default: ""
-  PrivateSubnets:
-    Type: String
-    Default: ""
-  BastionSecurityGroup:
-    Type: String
-    Default: ""
 
 Conditions:
-  CreateCodebuildWebhook: !Equals [ "Prefix", !Ref BranchNameMatch ]
   SetGitHubToken: !Equals [ "Clear text", !Ref GitHubTokenType ]
-
-  hasVpcEnabled: !And 
-    - !Not [ !Equals [ "", !Ref Vpc ] ]
-    - !Not [ !Equals [ "", !Ref PrivateSubnets ] ]
-    - !Not [ !Equals [ "", !Ref BastionSecurityGroup ] ]
 
 Resources:
 
@@ -150,6 +124,7 @@ Resources:
       TopicName: !Sub ${AWS::StackName}-topic
 
   NotificationRule:
+    DependsOn: Pipeline
     Type: AWS::CodeStarNotifications::NotificationRule
     Properties: 
       DetailType: BASIC
@@ -251,14 +226,7 @@ Resources:
                     "GitHubToken": "${Token}",
                     "GitHubTokenType": "Secrers manager ARN" ,
                     "BranchName": "${BranchName}",
-                    "BranchNameMatch": "${BranchNameMatch}",
-                    "BranchName": "${BranchName}",
-
-
-
-                    "Vpc": "#{InfrastructureStack.Vpc}",
-                    "PrivateSubnets": "#{InfrastructureStack.PrivateSubnets}",
-                    "BastionSecurityGroup": "#{InfrastructureStack.BastionSecurityGroup}"
+                    "BranchName": "${BranchName}"
 
                   }
                 - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
