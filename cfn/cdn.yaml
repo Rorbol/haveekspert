@@ -1,0 +1,12 @@
+---
+Resources:
+  certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: example.com
+      SubjectAlternativeNames: !Ref list
+      ValidationMethod: DNS
+      # DomainValidationOptions:
+      #   - DomainName: example.com
+      #     ValidationDomain: example.com
+
