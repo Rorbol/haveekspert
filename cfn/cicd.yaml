@@ -433,10 +433,12 @@ Resources:
           version: 0.2
           phases:
             install:
-              # runtime-versions:
-              #   golang: latest
+              runtime-versions:
+                golang: latest
               commands:
-                - brew install hugo
+                # - git clone https://github.com/gohugoio/hugo.git && cd hugo && go install --tags extended
+                - wget https://copr.fedorainfracloud.org/coprs/daftaupe/hugo/repo/epel-7/daftaupe-hugo-epel-7.repo -O /etc/yum.repos.d/hugo.repo
+                - yum update -y && yum install hugo -y && cd ..
             build:
               commands:
                 - cd site/ && hugo -D --destination ../static
@@ -445,4 +447,3 @@ Resources:
             files:
               ${artifactPath}**/*
         Type: CODEPIPELINE
-
