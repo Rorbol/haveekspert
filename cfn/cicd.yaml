@@ -215,7 +215,7 @@ Resources:
             RunOrder: 1
 
         # Release infrastructure
-        - Name: DeployWebsite
+        - Name: UpdatePipeline
           Actions:
           - Name: updatePipeline
             InputArtifacts:
@@ -231,7 +231,7 @@ Resources:
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
               StackName: !Ref AWS::StackName
               OutputFileName: pipeline
-              TemplatePath: source::cfn/pipeline.yaml
+              TemplatePath: source::cfn/cicd.yaml
               ParameterOverrides: !Sub
                 - |
                   {
