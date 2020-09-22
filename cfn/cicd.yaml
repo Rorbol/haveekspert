@@ -36,9 +36,8 @@ Parameters:
     NoEcho: true
   GitHubTokenType:
     Type: String
-    AllowedValues: [ "Secrers manager ARN", "Clear text" ]
+    AllowedValues: [ "Secrets manager ARN", "Clear text" ]
     Default: Clear text
-
   BranchName:
     Type: String
 
@@ -154,26 +153,7 @@ Resources:
       TargetAction: Source 
       Name: !Sub ${AWS::StackName}-Webhook 
       TargetPipelineVersion: !GetAtt Pipeline.Version
-      RegisterWithThirdParty: 'true'
-
-
-  # # FeatureBranchWebhook: 
-  # #   Type: AWS::CodePipeline::Webhook
-  # #   Properties:
-  # #     AuthenticationConfiguration: 
-  # #       SecretToken: !Sub
-  # #         - '{{resolve:secretsmanager:${Token}:SecretString:token}}'
-  # #         - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
-  # #     Filters: 
-  # #     - JsonPath: $[?(@.ref =~ /refs\/heads\/feature\/.*/i)]..owner.name
-  # #       MatchEquals: !Ref GitHubOwner
-  # #     Authentication: GITHUB_HMAC 
-  # #     TargetPipeline: !Ref Pipeline
-  # #     TargetAction: Source 
-  # #     Name: featureBranchWebhook 
-  # #     TargetPipelineVersion: 1
-  # #     RegisterWithThirdParty: 'true'
-
+      RegisterWithThirdParty: true
 
   Pipeline: 
     Type: AWS::CodePipeline::Pipeline 
@@ -237,7 +217,7 @@ Resources:
         # Release infrastructure
         - Name: DeployWebsite
           Actions:
-          - Name: updatePipelineWithVpc
+          - Name: updatePipeline
             InputArtifacts:
             - Name: source
             ActionTypeId:
@@ -258,14 +238,28 @@ Resources:
                     "RepositoryName": "${RepositoryName}",
                     "GitHubOwner": "${GitHubOwner}",
                     "GitHubToken": "${Token}",
-                    "GitHubTokenType": "Secrers manager ARN" ,
-                    "BranchName": "${BranchName}",
+                    "GitHubTokenType": "Secrets manager ARN" ,
                     "BranchName": "${BranchName}"
-
                   }
                 - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
             OutputArtifacts: []
             RunOrder: 1
+
+        # Static code analysis stage
+        - Name: BuildHugoWebsite
+          Actions:
+          - Name: hugo-build
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Build
+              Owner: AWS
+              Version: '1'
+              Provider: CodeBuild
+            Configuration:
+              ProjectName: !Sub ${AWS::StackName}-hugo-build
+            RunOrder: 1
+
 
 
           # - Name: infrastructure-cfn-stack
@@ -414,51 +408,51 @@ Resources:
                 - cfn_nag_scan --input-path cfn/
         Type: CODEPIPELINE
 
-  # SqlLintLogGroup:
-  #   Type: AWS::Logs::LogGroup
-  #   Properties:
-  #     LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-sql-lint
-  #     RetentionInDays: 7
+  HugoBuildLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
+      RetentionInDays: 7
 
-  # SqlLintProject:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties: 
-  #     Name: !Sub ${AWS::StackName}-sql-lint
-  #     Description: SQL linter
-  #     Artifacts:
-  #       Type: CODEPIPELINE
-  #     Environment:
-  #       Type: LINUX_CONTAINER
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
-  #     LogsConfig:
-  #       CloudWatchLogs:
-  #         GroupName: !Sub /aws/codebuild/${AWS::StackName}-sql-lint
-  #         Status: ENABLED
-  #     TimeoutInMinutes: 5
-  #     QueuedTimeoutInMinutes: 5
-  #     ServiceRole: !Ref CicdRole
-  #     Source: 
-  #       BuildSpec: |
-  #         version: 0.2
-  #         phases:
-  #           install:
-  #             runtime-versions:
-  #               nodejs: latest
-  #             commands:
-  #               - npm install -g sql-lint
-  #           build:
-  #             commands:
-  #               - sql-lint --version
-  #               - sql-lint sql/hero-ddl.sql --driver mysql
-  #         artifacts:
-  #           discard-paths: yes
-  #           files:
-  #             ${artifactPath}**/*
-  #       Type: CODEPIPELINE
-  #     VpcConfig: !If
-  #       - hasVpcEnabled
-  #       - SecurityGroupIds: [ !Ref BastionSecurityGroup ]
-  #         Subnets: !Split [ ",", !Ref PrivateSubnets ]
-  #         VpcId: !Ref Vpc
-  #       - !Ref AWS::NoValue
+  SqlLintProject:
+    Type: AWS::CodeBuild::Project
+    Properties: 
+      Name: !Sub ${AWS::StackName}-hugo-build
+      Description: Hugo website 
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+      LogsConfig:
+        CloudWatchLogs:
+          GroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
+          Status: ENABLED
+      TimeoutInMinutes: 5
+      QueuedTimeoutInMinutes: 5
+      ServiceRole: !Ref CicdRole
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              runtime-versions:
+                nodejs: latest
+              commands:
+                - npm install -g sql-lint
+            build:
+              commands:
+                - sql-lint --version
+                - sql-lint sql/hero-ddl.sql --driver mysql
+          artifacts:
+            discard-paths: yes
+            files:
+              ${artifactPath}**/*
+        Type: CODEPIPELINE
+      VpcConfig: !If
+        - hasVpcEnabled
+        - SecurityGroupIds: [ !Ref BastionSecurityGroup ]
+          Subnets: !Split [ ",", !Ref PrivateSubnets ]
+          VpcId: !Ref Vpc
+        - !Ref AWS::NoValue
