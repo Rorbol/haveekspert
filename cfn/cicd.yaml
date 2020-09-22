@@ -14,7 +14,6 @@ Metadata:
       - GitHubOwner
       - RepositoryName
       - BranchName
-      - BranchNameMatch
       - GitHubToken
       - GitHubTokenType 
    
@@ -140,6 +139,40 @@ Resources:
       Targets: 
         - TargetType: SNS 
           TargetAddress: !Ref SnsTopic
+
+  Webhook: 
+    Type: AWS::CodePipeline::Webhook
+    Properties:
+      AuthenticationConfiguration: 
+        SecretToken: {{resolve:secretsmanager:MyGitHubSecret:SecretString:token}} 
+      Filters: 
+      - JsonPath: "$.ref" 
+        MatchEquals: refs/heads/{Branch} 
+      Authentication: GITHUB_HMAC 
+      TargetPipeline: !Ref WebhookPipeline
+      TargetAction: Source 
+      Name: MyWebhook 
+      TargetPipelineVersion: !GetAtt WebhookPipeline.Version
+      RegisterWithThirdParty: 'true'
+
+
+  # # FeatureBranchWebhook: 
+  # #   Type: AWS::CodePipeline::Webhook
+  # #   Properties:
+  # #     AuthenticationConfiguration: 
+  # #       SecretToken: !Sub
+  # #         - '{{resolve:secretsmanager:${Token}:SecretString:token}}'
+  # #         - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
+  # #     Filters: 
+  # #     - JsonPath: $[?(@.ref =~ /refs\/heads\/feature\/.*/i)]..owner.name
+  # #       MatchEquals: !Ref GitHubOwner
+  # #     Authentication: GITHUB_HMAC 
+  # #     TargetPipeline: !Ref Pipeline
+  # #     TargetAction: Source 
+  # #     Name: featureBranchWebhook 
+  # #     TargetPipelineVersion: 1
+  # #     RegisterWithThirdParty: 'true'
+
 
   Pipeline: 
     Type: AWS::CodePipeline::Pipeline 
