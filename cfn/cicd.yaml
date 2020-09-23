@@ -417,7 +417,6 @@ Resources:
             build:
               commands:
                 - cfn-lint --version
-                # - cfn-lint --help
                 - cfn-lint cfn/*.yaml
         Type: CODEPIPELINE
 
