@@ -257,7 +257,7 @@ Resources:
               ActionMode: CREATE_UPDATE
               RoleArn:  !GetAtt [ CicdRole, Arn ] 
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-              StackName: !Ref AWS::StackName
+              StackName: website
               # OutputFileName: pipeline
               TemplatePath: source::cfn/website.yaml
               # ParameterOverrides: !Sub
@@ -285,7 +285,7 @@ Resources:
           #     ActionMode: CREATE_UPDATE
           #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
           #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-          #     StackName: !Ref AWS::StackName
+          #     StackName: cdn
           #     OutputFileName: pipeline
           #     TemplatePath: source::cfn/cicd.yaml
           #     ParameterOverrides: !Sub
