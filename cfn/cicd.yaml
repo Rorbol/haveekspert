@@ -156,7 +156,7 @@ Resources:
       RegisterWithThirdParty: true
 
   Pipeline: 
-    Type: AWS::CodePipeline::Pipeline 
+    Type: AWS::CodePipeline::Pipeline
     Properties: 
       Name: !Sub ${AWS::StackName}
       RoleArn: !GetAtt [ CicdRole, Arn ]
@@ -246,6 +246,7 @@ Resources:
             RunOrder: 1
 
           - Name: deployWebsite
+            Namespace: website
             InputArtifacts:
             - Name: source
             ActionTypeId:
@@ -308,70 +309,23 @@ Resources:
             - Name: hugo
             RunOrder: 1
 
-
-
-          # - Name: infrastructure-cfn-stack
-          #   Namespace: InfrastructureStack
-          #   InputArtifacts:
-          #   - Name: source
-          #   ActionTypeId:
-          #     Category: Deploy
-          #     Owner: AWS
-          #     Version: '1'
-          #     Provider: CloudFormation
-          #   Configuration:
-          #     ActionMode: CREATE_UPDATE
-          #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
-          #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-          #     StackName: infrastructure
-          #     OutputFileName: deployoutput
-          #     TemplatePath: source::cfn/infrastructure.yaml
-          #     # ParameterOverrides: !Sub |
-          #     #   { "EC2KeyName": "${EC2KeyName}" }
-          #   OutputArtifacts: []
-          #   RunOrder: 2
-
-
-        # # Release services
-        # - Name: DeployServices
-        #   Actions:
-
-        #   - Name: hero-cfn-stack
-        #     InputArtifacts:
-        #     - Name: source
-        #     ActionTypeId:
-        #       Category: Deploy
-        #       Owner: AWS
-        #       Version: '1'
-        #       Provider: CloudFormation
-        #     Configuration:
-        #       ActionMode: CREATE_UPDATE
-        #       RoleArn:  !GetAtt [ CicdRole, Arn ] 
-        #       Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-        #       StackName: hero
-        #       OutputFileName: heroout
-        #       TemplatePath: source::cfn/hero.yaml
-        #       ParameterOverrides: |
-        #         {
-        #           "Vpc": "#{InfrastructureStack.Vpc}",
-        #           "PrivateSubnets": "#{InfrastructureStack.PrivateSubnets}",
-        #           "BastionSecurityGroup": "#{InfrastructureStack.BastionSecurityGroup}",
-        #           "DatabaseMasterPassword": "password"
-        #         }
-        #     OutputArtifacts: []
-        #     RunOrder: 1
-
-          # - Name: hero-sql-schema
-          #   InputArtifacts:
-          #   - Name: source
-          #   ActionTypeId:
-          #     Category: Build
-          #     Owner: AWS
-          #     Version: '1'
-          #     Provider: CodeBuild
-          #   Configuration:
-          #     ProjectName: !Sub ${AWS::StackName}-vpc-build
-          #   RunOrder: 2
+        # Publish website
+        - Name: PublishStaticWebsite
+          Actions:
+          - Name: hugo-static-publish
+            InputArtifacts:
+            - Name: hugo
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Version: '1'
+              Provider: S3
+            Configuration:
+              # ObjectKey: "cfn/#{SourceVariables.BranchName}/#{SourceVariables.CommitterDate}"
+              Extract: "true"
+              BucketName: "#{website.WebsiteBucket}"
+            OutputArtifacts: []
+            RunOrder: 1
 
   CfnLintLogGroup:
     Type: AWS::Logs::LogGroup

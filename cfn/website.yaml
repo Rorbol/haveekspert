@@ -16,3 +16,7 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
+
+Outputs:
+  WebsiteBucket:
+    Value: !Ref WebsiteBucket
