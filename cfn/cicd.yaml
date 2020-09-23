@@ -443,12 +443,13 @@ Resources:
             build:
               commands:
                 - cd haveekspert
-                - pwd
-                - ls -la
                 - hugo -D --destination ../static
                 - cd ..
                 - pwd
                 - ls -la
+            post_build:
+              commands:
+                - aws s3 sync ../static s3://#{website.WebsiteBucket}/ --delete
           artifacts:
             discard-paths: yes
             files:
