@@ -497,6 +497,8 @@ Resources:
                 - yum update -y && yum install hugo -y
             build:
               commands:
+                - pwd
+                - ls -la
                 - cd site/ && hugo -D --destination ../static
           artifacts:
             discard-paths: yes
