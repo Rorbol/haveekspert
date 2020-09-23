@@ -215,7 +215,7 @@ Resources:
             RunOrder: 1
 
         # Release infrastructure
-        - Name: UpdatePipeline
+        - Name: DeployInfrastructure
           Actions:
           - Name: updatePipeline
             InputArtifacts:
@@ -244,6 +244,62 @@ Resources:
                 - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
             OutputArtifacts: []
             RunOrder: 1
+
+          - Name: deployWebsite
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Version: '1'
+              Provider: CloudFormation
+            Configuration:
+              ActionMode: CREATE_UPDATE
+              RoleArn:  !GetAtt [ CicdRole, Arn ] 
+              Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+              StackName: !Ref AWS::StackName
+              # OutputFileName: pipeline
+              TemplatePath: source::cfn/website.yaml
+              # ParameterOverrides: !Sub
+              #   - |
+              #     {
+              #       "RepositoryName": "${RepositoryName}",
+              #       "GitHubOwner": "${GitHubOwner}",
+              #       "GitHubToken": "${Token}",
+              #       "GitHubTokenType": "Secrets manager ARN" ,
+              #       "BranchName": "${BranchName}"
+              #     }
+              #   - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
+            OutputArtifacts: []
+            RunOrder: 2
+
+          # - Name: deployCdn
+          #   InputArtifacts:
+          #   - Name: source
+          #   ActionTypeId:
+          #     Category: Deploy
+          #     Owner: AWS
+          #     Version: '1'
+          #     Provider: CloudFormation
+          #   Configuration:
+          #     ActionMode: CREATE_UPDATE
+          #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
+          #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+          #     StackName: !Ref AWS::StackName
+          #     OutputFileName: pipeline
+          #     TemplatePath: source::cfn/cicd.yaml
+          #     ParameterOverrides: !Sub
+          #       - |
+          #         {
+          #           "RepositoryName": "${RepositoryName}",
+          #           "GitHubOwner": "${GitHubOwner}",
+          #           "GitHubToken": "${Token}",
+          #           "GitHubTokenType": "Secrets manager ARN" ,
+          #           "BranchName": "${BranchName}"
+          #         }
+          #       - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
+          #   OutputArtifacts: []
+          #   RunOrder: 3
 
         # Static code analysis stage
         - Name: BuildHugoWebsite
