@@ -7,6 +7,19 @@ Parameters:
   AlternativeNames:
     Type: CommaDelimitedList
 
+  CachingPolicy:
+    AllowedValues: [CachingOptimized, CachingDisabled ]
+    Type: String
+
+Mappings: 
+  ManagedCachePolicy: 
+    CachingOptimized: 
+      Id: 658327ea-f89d-4fab-a63d-7e88639e58f6
+    CachingOptimizedForUncompressedObjects: 
+      Id: b2884449-e4de-46a7-ac36-70bc7f1ddd6d
+    CachingDisabled: 
+      Id: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+
 Resources:
 
   WebsiteBucket:
@@ -37,32 +50,32 @@ Resources:
         DefaultRootObject: index.html
 
         Origins: 
-          - 
-            # ConnectionAttempts: 3
-            # ConnectionTimeout: 10
+          - Id: !Sub ${DomainName}-s3website-origin
+            DomainName: !GetAtt WebsiteBucket.DomainName
             CustomOriginConfig: 
               OriginProtocolPolicy: http-only
-              # HTTPPort: 80
-              # HTTPSPort: 443
-              # OriginKeepaliveTimeout: 5
-              # OriginReadTimeout: 30
-              # OriginSSLProtocols: 
-              #   - String
-            DomainName: !GetAtt WebsiteBucket.DomainName
-            Id: !Sub ${DomainName}-s3-origin
-            # OriginCustomHeaders: 
-            #   - OriginCustomHeader
-            # OriginPath: String
-            # S3OriginConfig: 
-            #   S3OriginConfig
 
-        # CacheBehaviors: 
-        #   - CacheBehavior
+          # - Id: !Sub ${DomainName}-s3bucket-origin
+          #   DomainName: !Sub ${WebsiteBucket}.s3.amazonaws.com
+          #   CustomOriginConfig: 
+          #     OriginProtocolPolicy: http-only
+          #   S3OriginConfig: "" # origin-access-identity/cloudfront/E36VC6OXT542PU
+          #   #   S3OriginConfig
 
-        # CustomErrorResponses: 
-        #   - CustomErrorResponse
+
+
+                        # "Id": "S3-efio-public-website",
+                        # "DomainName": "efio-public-website.s3.amazonaws.com",
+                        # "OriginPath": "",
+                        # "CustomHeaders": {
+                        #     "Quantity": 0
+                        # },
+                        # "S3OriginConfig": {
+                        #     "OriginAccessIdentity": "origin-access-identity/cloudfront/E36VC6OXT542PU"
+                        # },
+
         DefaultCacheBehavior: 
-          TargetOriginId: !Sub ${DomainName}-s3-origin
+          TargetOriginId: !Sub ${DomainName}-s3website-origin
           AllowedMethods:
             - HEAD
             - GET
@@ -70,22 +83,11 @@ Resources:
           CachedMethods: 
             - HEAD
             - GET
-          # CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 #  Managed-CachingOptimized
-          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad #  Managed-CachingDisabled
-          # Compress: true
-          # DefaultTTL: 0
-          # # MinTTL: 0
-          # # MaxTTL: 31536000
-          # # FieldLevelEncryptionId: String
-          # # OriginRequestPolicyId: String
-          # # SmoothStreaming: Boolean
-          # # TrustedSigners: 
-          # #   - String
+          CachePolicyId: !FindInMap [ ManagedCachePolicy, CachingDisabled, Id ]
           ViewerProtocolPolicy: redirect-to-https
-          # ForwardedValues:
-          #   QueryString: false
-          #   # Headers: []
-          #   # - Host
+
+        # CustomErrorResponses: 
+        #   - CustomErrorResponse
 
         # HttpVersion: String
         IPV6Enabled: true
