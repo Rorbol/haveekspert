@@ -430,7 +430,7 @@ Resources:
       QueuedTimeoutInMinutes: 5
       ServiceRole: !Ref CicdRole
       Source: 
-        BuildSpec: |
+        BuildSpec: !Sub |
           version: 0.2
           phases:
             install:
