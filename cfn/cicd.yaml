@@ -259,7 +259,6 @@ Resources:
               RoleArn:  !GetAtt [ CicdRole, Arn ] 
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
               StackName: website
-              # OutputFileName: pipeline
               TemplatePath: source::cfn/website.yaml
             OutputArtifacts: []
             RunOrder: 2
@@ -305,6 +304,10 @@ Resources:
               Provider: CodeBuild
             Configuration:
               ProjectName: !Sub ${AWS::StackName}-hugo-build
+              EnvironmentVariables: 
+                - Name: bucket
+                  Type: PLAINTEXT
+                  Value: "#{website.WebsiteBucket}"
             OutputArtifacts:
             - Name: hugo
             RunOrder: 1
@@ -423,10 +426,6 @@ Resources:
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
 
-        EnvironmentVariables: 
-          - Name: bucket
-            Type: PLAINTEXT
-            Value: "#{website.WebsiteBucket}"
 
       LogsConfig:
         CloudWatchLogs:
