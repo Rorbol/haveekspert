@@ -83,7 +83,7 @@ Resources:
           CachedMethods: 
             - HEAD
             - GET
-          CachePolicyId: !FindInMap [ ManagedCachePolicy, CachingDisabled, Id ]
+          CachePolicyId: !FindInMap [ ManagedCachePolicy, !Ref CachingPolicy, Id ]
           ViewerProtocolPolicy: redirect-to-https
 
         # CustomErrorResponses: 
