@@ -29,7 +29,7 @@ Resources:
     Properties: 
       DistributionConfig: 
         Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
-        Enabled: false
+        Enabled: true
         PriceClass: PriceClass_100
         # Aliases: !Split 
         #   - ","
@@ -72,7 +72,7 @@ Resources:
             - GET
           # CachePolicyId: String
           Compress: true
-          DefaultTTL: 86400
+          DefaultTTL: 0
           # MinTTL: 0
           # MaxTTL: 31536000
           # FieldLevelEncryptionId: String
@@ -95,91 +95,10 @@ Resources:
         # ViewerCertificate: 
         #   ViewerCertificate
         # WebACLId: String
-
-  # # CloudFrontDistributionSslCertificate:
-  # #   Type: AWS::CloudFront::Distribution
-  # #   Properties:
-  # #     DistributionConfig:
-  # #       Aliases: !Ref WPDomainAliases
-  # #       CacheBehaviors:
-  # #       - PathPattern: wp-includes/*
-  # #         AllowedMethods:
-  # #         - GET
-  # #         - HEAD
-  # #         - OPTIONS
-  # #         DefaultTTL: 900
-  # #         MaxTTL: 900
-  # #         MinTTL: 900
-  # #         ForwardedValues:
-  # #           QueryString: true
-  # #           Headers:
-  # #           - Host
-  # #         TargetOriginId: elb
-  # #         ViewerProtocolPolicy: redirect-to-https
-  # #         Compress: true
-  # #       - PathPattern: wp-content/*
-  # #         AllowedMethods:
-  # #         - DELETE
-  # #         - GET
-  # #         - HEAD
-  # #         - OPTIONS
-  # #         - PATCH
-  # #         - POST
-  # #         - PUT
-  # #         DefaultTTL: 900
-  # #         MaxTTL: 900
-  # #         MinTTL: 900
-  # #         ForwardedValues:
-  # #           QueryString: true
-  # #           Headers:
-  # #           - Host
-  # #         TargetOriginId: elb
-  # #         ViewerProtocolPolicy: redirect-to-https
-  # #         Compress: true
-  # #       Comment: !Ref 'AWS::StackName'
-  # #       DefaultCacheBehavior:
-  # #         AllowedMethods:
-  # #         - DELETE
-  # #         - GET
-  # #         - HEAD
-  # #         - OPTIONS
-  # #         - PATCH
-  # #         - POST
-  # #         - PUT
-  # #         DefaultTTL: 0
-  # #         MaxTTL: 0
-  # #         MinTTL: 0
-  # #         ForwardedValues:
-  # #           QueryString: true
-  # #           Headers:
-  # #           - '*'
-  # #           Cookies:
-  # #             Forward: all
-  # #         TargetOriginId: elb
-  # #         ViewerProtocolPolicy: redirect-to-https
-  # #         Compress: true
-  # #       Enabled: true
-  # #       Origins:
-  # #       - DomainName: !Ref PublicAlbDnsName
-  # #         Id: elb
-  # #         CustomOriginConfig:
-  # #           OriginProtocolPolicy: https-only
-  # #         OriginCustomHeaders: 
-  # #         - HeaderName: X-Origin-Secret
-  # #           HeaderValue: !Ref OriginSecret
-  # #       PriceClass: PriceClass_100
-  # #       ViewerCertificate:
-  # #         AcmCertificateArn: !Ref CloudFrontAcmCertificate
-  # #         SslSupportMethod: sni-only
-  # #         MinimumProtocolVersion: TLSv1
-
-
-
-
-
-
-
-
+        # ViewerCertificate:
+        #   AcmCertificateArn: !Ref CloudFrontAcmCertificate
+        #   SslSupportMethod: sni-only
+        #   MinimumProtocolVersion: TLSv1
 
 Outputs:
   WebsiteBucket:
