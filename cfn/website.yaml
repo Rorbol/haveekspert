@@ -81,7 +81,7 @@ Resources:
           # # SmoothStreaming: Boolean
           # # TrustedSigners: 
           # #   - String
-          # ViewerProtocolPolicy: redirect-to-https
+          ViewerProtocolPolicy: redirect-to-https
           # ForwardedValues:
           #   QueryString: false
           #   # Headers: []
