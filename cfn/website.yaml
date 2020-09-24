@@ -24,39 +24,77 @@ Resources:
         IndexDocument: index.html
         ErrorDocument: error.html
 
-  # CloudfrontDistribution:
-  #   Type: AWS::CloudFront::Distribution
-  #   Properties: 
-  #     DistributionConfig: 
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig: 
+        Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
+        Enabled: false
+        PriceClass: PriceClass_100
+        # Aliases: !Split 
+        #   - ","
+        #   - !Join [ ",", [ !Ref DomainName, !Join [ ",", !Ref AlternativeNames ] ] ]
+        DefaultRootObject: index.html
 
-  #       Aliases: !Ref AlternativeNames
-  #         # - String
-  #       DefaultRootObject: index.html
+        Origins: 
+          - 
+            # ConnectionAttempts: 3
+            # ConnectionTimeout: 10
+            CustomOriginConfig: 
+              OriginProtocolPolicy: http-only
+              # HTTPPort: 80
+              # HTTPSPort: 443
+              # OriginKeepaliveTimeout: 5
+              # OriginReadTimeout: 30
+              # OriginSSLProtocols: 
+              #   - String
+            DomainName: !GetAtt WebsiteBucket.DomainName
+            Id: !Sub ${DomainName}-s3-origin
+            # OriginCustomHeaders: 
+            #   - OriginCustomHeader
+            # OriginPath: String
+            # S3OriginConfig: 
+            #   S3OriginConfig
 
-  #       Origins: 
-  #         - Origin
+        # CacheBehaviors: 
+        #   - CacheBehavior
 
-  #       # OriginGroups: 
-  #       #   OriginGroups
+        # CustomErrorResponses: 
+        #   - CustomErrorResponse
+        DefaultCacheBehavior: 
+          TargetOriginId: !Sub ${DomainName}-s3-origin
+          AllowedMethods:
+            - HEAD
+            - GET
+            - OPTIONS
+          CachedMethods: 
+            - HEAD
+            - GET
+          # CachePolicyId: String
+          Compress: true
+          DefaultTTL: 86400
+          # MinTTL: 0
+          # MaxTTL: 31536000
+          # FieldLevelEncryptionId: String
+          # OriginRequestPolicyId: String
+          # SmoothStreaming: Boolean
+          # TrustedSigners: 
+          #   - String
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: false
+            # Headers: []
+            # - Host
 
-  #       CacheBehaviors: 
-  #         - CacheBehavior
-  #       Comment: String
-  #       CustomErrorResponses: 
-  #         - CustomErrorResponse
-  #       DefaultCacheBehavior: 
-  #         DefaultCacheBehavior
-  #       Enabled: Boolean
-  #       HttpVersion: String
-  #       IPV6Enabled: Boolean
-  #       Logging: 
-  #         Logging
-  #       PriceClass: String
-  #       Restrictions: 
-  #         Restrictions
-  #       ViewerCertificate: 
-  #         ViewerCertificate
-  #       WebACLId: String
+        # HttpVersion: String
+        IPV6Enabled: true
+        # Logging: 
+        #   Logging
+        # Restrictions: 
+        #   Restrictions
+        # ViewerCertificate: 
+        #   ViewerCertificate
+        # WebACLId: String
 
   # # CloudFrontDistributionSslCertificate:
   # #   Type: AWS::CloudFront::Distribution
