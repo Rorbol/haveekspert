@@ -158,11 +158,11 @@ Resources:
   Pipeline: 
     Type: AWS::CodePipeline::Pipeline
     Properties: 
-      Name: !Sub ${AWS::StackName}
+      Name: !Sub ${RepositoryName}-${AWS::StackName}
       RoleArn: !GetAtt [ CicdRole, Arn ]
       RestartExecutionOnUpdate: true
       ArtifactStore:
-        Type: S3 
+        Type: S3
         Location: !Ref ArtifactBucket
       Stages:
         # Source stage
@@ -199,7 +199,7 @@ Resources:
               Version: '1'
               Provider: CodeBuild
             Configuration:
-              ProjectName: !Sub ${AWS::StackName}-cfn-lint
+              ProjectName: !Sub ${RepositoryName}-${AWS::StackName}-cfn-lint
             RunOrder: 1
 
           - Name: cfn-nag
@@ -211,7 +211,7 @@ Resources:
               Version: '1'
               Provider: CodeBuild
             Configuration:
-              ProjectName: !Sub ${AWS::StackName}-cfn-nag
+              ProjectName: !Sub ${RepositoryName}-${AWS::StackName}-cfn-nag
             RunOrder: 1
 
         # Release infrastructure
@@ -258,12 +258,13 @@ Resources:
               ActionMode: CREATE_UPDATE
               RoleArn:  !GetAtt [ CicdRole, Arn ] 
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-              StackName: website
+              StackName: !Sub ${RepositoryName}-website
               TemplatePath: source::cfn/website.yaml
             OutputArtifacts: []
             RunOrder: 2
 
           # - Name: deployCdn
+          #   Region: us-east-1
           #   InputArtifacts:
           #   - Name: source
           #   ActionTypeId:
@@ -275,9 +276,9 @@ Resources:
           #     ActionMode: CREATE_UPDATE
           #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
           #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-          #     StackName: cdn
+          #     StackName: !Sub ${RepositoryName}-cdn
           #     OutputFileName: pipeline
-          #     TemplatePath: source::cfn/cicd.yaml
+          #     TemplatePath: source::cfn/cdn.yaml
           #     ParameterOverrides: !Sub
           #       - |
           #         {
@@ -303,7 +304,7 @@ Resources:
               Version: '1'
               Provider: CodeBuild
             Configuration:
-              ProjectName: !Sub ${AWS::StackName}-hugo-build
+              ProjectName: !Sub ${RepositoryName}-${AWS::StackName}-hugo-build
               EnvironmentVariables: |
                 [{
                   "name":   "bucket",
@@ -335,13 +336,13 @@ Resources:
   CfnLintLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-lint
+      LogGroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-cfn-lint
       RetentionInDays: 7
 
   CfnLintProject:
     Type: AWS::CodeBuild::Project
     Properties: 
-      Name: !Sub ${AWS::StackName}-cfn-lint
+      Name: !Sub ${RepositoryName}-${AWS::StackName}-cfn-lint
       Description: Cloudformation linter
       Artifacts:
         Type: CODEPIPELINE
@@ -351,7 +352,7 @@ Resources:
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
       LogsConfig:
         CloudWatchLogs:
-          GroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-lint
+          GroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-cfn-lint
           Status: ENABLED
       TimeoutInMinutes: 5
       QueuedTimeoutInMinutes: 5
@@ -374,13 +375,13 @@ Resources:
   CfnNagLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-nag
+      LogGroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-cfn-nag
       RetentionInDays: 7
 
   CfnNagProject:
     Type: AWS::CodeBuild::Project
     Properties: 
-      Name: !Sub ${AWS::StackName}-cfn-nag
+      Name: !Sub ${RepositoryName}-${AWS::StackName}-cfn-nag
       Description: Cloudformation compliance-as-code
       Artifacts:
         Type: CODEPIPELINE
@@ -390,7 +391,7 @@ Resources:
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
       LogsConfig:
         CloudWatchLogs:
-          GroupName: !Sub /aws/codebuild/${AWS::StackName}-cfn-nag
+          GroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-cfn-nag
           Status: ENABLED
       TimeoutInMinutes: 5
       QueuedTimeoutInMinutes: 5
@@ -413,13 +414,13 @@ Resources:
   HugoBuildLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
+      LogGroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-hugo-build
       RetentionInDays: 7
 
   HugoBuildProject:
     Type: AWS::CodeBuild::Project
     Properties: 
-      Name: !Sub ${AWS::StackName}-hugo-build
+      Name: !Sub ${RepositoryName}-${AWS::StackName}-hugo-build
       Description: Hugo website 
       Artifacts:
         Type: CODEPIPELINE
@@ -427,11 +428,9 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
-
-
       LogsConfig:
         CloudWatchLogs:
-          GroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
+          GroupName: !Sub /aws/codebuild/${RepositoryName}-${AWS::StackName}-hugo-build
           Status: ENABLED
       TimeoutInMinutes: 5
       QueuedTimeoutInMinutes: 5
