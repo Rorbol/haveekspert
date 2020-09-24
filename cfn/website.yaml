@@ -49,77 +49,6 @@ Resources:
         ErrorDocument: error.html
 
   # CloudfrontDistribution:
-  #   Type: AWS::CloudFront::Distribution
-  #   Properties: 
-  #     DistributionConfig: 
-  #       Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
-  #       Enabled: true
-  #       PriceClass: PriceClass_100
-  #       # Aliases: !Split 
-  #       #   - ","
-  #       #   - !Join [ ",", [ !Ref DomainName, !Join [ ",", !Ref AlternativeNames ] ] ]
-  #       DefaultRootObject: index.html
-
-  #       Origins: 
-  #         - Id: !Sub ${DomainName}-s3website-origin
-  #           DomainName: !GetAtt WebsiteBucket.DomainName
-  #           CustomOriginConfig: 
-  #             OriginProtocolPolicy: http-only
-
-  #         # - Id: !Sub ${DomainName}-s3bucket-origin
-  #         #   DomainName: !Sub ${WebsiteBucket}.s3.amazonaws.com
-  #         #   CustomOriginConfig: 
-  #         #     OriginProtocolPolicy: http-only
-  #         #   S3OriginConfig: "" # origin-access-identity/cloudfront/E36VC6OXT542PU
-  #         #   #   S3OriginConfig
-
-
-
-  #                       # "Id": "S3-efio-public-website",
-  #                       # "DomainName": "efio-public-website.s3.amazonaws.com",
-  #                       # "OriginPath": "",
-  #                       # "CustomHeaders": {
-  #                       #     "Quantity": 0
-  #                       # },
-  #                       # "S3OriginConfig": {
-  #                       #     "OriginAccessIdentity": "origin-access-identity/cloudfront/E36VC6OXT542PU"
-  #                       # },
-
-  #       DefaultCacheBehavior: 
-  #         TargetOriginId: !Sub ${DomainName}-s3website-origin
-  #         AllowedMethods:
-  #           - HEAD
-  #           - GET
-  #           - OPTIONS
-  #         CachedMethods: 
-  #           - HEAD
-  #           - GET
-  #         CachePolicyId: !FindInMap [ ManagedCachePolicy, !Ref CachingPolicy, Id ]
-  #         ViewerProtocolPolicy: redirect-to-https
-
-  #       # CustomErrorResponses: 
-  #       #   - CustomErrorResponse
-
-  #       # HttpVersion: String
-  #       IPV6Enabled: true
-  #       # Logging: 
-  #       #   Logging
-  #       # Restrictions: 
-  #       #   Restrictions
-  #       # ViewerCertificate: 
-  #       #   ViewerCertificate
-  #       # WebACLId: String
-  #       # ViewerCertificate:
-  #       #   AcmCertificateArn: !Ref CloudFrontAcmCertificate
-  #       #   SslSupportMethod: sni-only
-  #       #   MinimumProtocolVersion: TLSv1
-
-  # OriginRequestPolicy:
-  #   Type: AWS::CloudFront::OriginRequestPolicy
-  #   Properties: 
-  #     OriginRequestPolicyConfig: 
-  #       OriginRequestPolicyConfig
-
   Cdn:
     Type: AWS::CloudFront::Distribution
     Properties: 
@@ -158,21 +87,16 @@ Resources:
         #   MinimumProtocolVersion: TLSv1
         HttpVersion: http2
         DefaultRootObject: index.html
+        CustomErrorResponses: 
+          - ErrorCachingMinTTL: 60
+            ErrorCode: 404
+            ResponseCode: 404
+            ResponsePagePath: /404.html
         # Logging: 
         #   Logging
         IPV6Enabled: true
         Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
         Enabled: true
-
-                        # "Id": "S3-efio-public-website",
-                        # "DomainName": "efio-public-website.s3.amazonaws.com",
-                        # "OriginPath": "",
-                        # "CustomHeaders": {
-                        #     "Quantity": 0
-                        # },
-                        # "S3OriginConfig": {
-                        #     "OriginAccessIdentity": "origin-access-identity/cloudfront/E36VC6OXT542PU"
-                        # },
 
         # CustomErrorResponses: 
         #   - CustomErrorResponse
