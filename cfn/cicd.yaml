@@ -304,10 +304,12 @@ Resources:
               Provider: CodeBuild
             Configuration:
               ProjectName: !Sub ${AWS::StackName}-hugo-build
-              EnvironmentVariables: "[{\"name\":\"bucket\",\"value\":\"#{website.WebsiteBucket}\",\"type\":\"PLAINTEXT\"}]"
-                # - Name: bucket
-                #   Type: PLAINTEXT
-                #   Value: "#{website.WebsiteBucket}"
+              EnvironmentVariables: |
+                [{
+                  "name":   "bucket",
+                  "value":  "#{website.WebsiteBucket}",
+                  "type":   "PLAINTEXT"
+                }]
             OutputArtifacts:
             - Name: hugo
             RunOrder: 1
