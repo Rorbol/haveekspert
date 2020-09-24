@@ -315,23 +315,23 @@ Resources:
             - Name: hugo
             RunOrder: 1
 
-        # Publish website
-        - Name: PublishStaticWebsite
-          Actions:
-          - Name: hugo-static-publish
-            InputArtifacts:
-            - Name: hugo
-            ActionTypeId:
-              Category: Deploy
-              Owner: AWS
-              Version: '1'
-              Provider: S3
-            Configuration:
-              # ObjectKey: "cfn/#{SourceVariables.BranchName}/#{SourceVariables.CommitterDate}"
-              Extract: "true"
-              BucketName: "#{website.WebsiteBucket}"
-            OutputArtifacts: []
-            RunOrder: 1
+        # # Publish website
+        # - Name: PublishStaticWebsite
+        #   Actions:
+        #   - Name: hugo-static-publish
+        #     InputArtifacts:
+        #     - Name: hugo
+        #     ActionTypeId:
+        #       Category: Deploy
+        #       Owner: AWS
+        #       Version: '1'
+        #       Provider: S3
+        #     Configuration:
+        #       # ObjectKey: "cfn/#{SourceVariables.BranchName}/#{SourceVariables.CommitterDate}"
+        #       Extract: "true"
+        #       BucketName: "#{website.WebsiteBucket}"
+        #     OutputArtifacts: []
+        #     RunOrder: 1
 
   CfnLintLogGroup:
     Type: AWS::Logs::LogGroup
@@ -453,7 +453,7 @@ Resources:
             post_build:
               commands:
                 - echo ${bucket}
-                - aws s3 sync ../public s3://${bucket}/ --delete
+                - aws s3 sync ../public s3://${bucket}/ --delete --acl public-read
           artifacts:
             discard-paths: yes
             files:
