@@ -36,11 +36,12 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
-        BlockPublicPolicy: true
-        IgnorePublicAcls: true
-        RestrictPublicBuckets: true
-      AccessControl: Private
+      #   BlockPublicAcls: true
+      #   BlockPublicPolicy: true
+      #   IgnorePublicAcls: true
+      #   RestrictPublicBuckets: true
+      # AccessControl: Private
+      AccessControl: PublicRead
       VersioningConfiguration:
         Status: Enabled
       WebsiteConfiguration:
