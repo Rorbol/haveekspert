@@ -24,13 +24,15 @@ Metadata:
         default: GitHub repository name
 
 Parameters:
-  RepositoryName:
-    Description: GitHub repository name
-    Type: String
-    Default: skysovs
   GitHubOwner:
     Type: String
     Default: efio-dk
+  RepositoryName:
+    Description: GitHub repository name
+    Type: String
+  BranchName:
+    Type: String
+    Default: master
   GitHubToken:
     Type: String
     NoEcho: true
@@ -38,8 +40,6 @@ Parameters:
     Type: String
     AllowedValues: [ "Secrets manager ARN", "Clear text" ]
     Default: Clear text
-  BranchName:
-    Type: String
 
 Conditions:
   SetGitHubToken: !Equals [ "Clear text", !Ref GitHubTokenType ]
@@ -449,11 +449,11 @@ Resources:
             build:
               commands:
                 - cd haveekspert
-                - hugo -D --destination ../static
+                - hugo -D --destination ../public
             post_build:
               commands:
                 - echo ${bucket}
-                - aws s3 sync ../static s3://${bucket}/ --delete
+                - aws s3 sync ../public s3://${bucket}/ --delete
           artifacts:
             discard-paths: yes
             files:
