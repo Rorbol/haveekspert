@@ -450,9 +450,6 @@ Resources:
               commands:
                 - cd haveekspert
                 - hugo -D --destination ../static
-                - cd ..
-                - pwd
-                - ls -la
             post_build:
               commands:
                 - echo ${bucket}
