@@ -422,6 +422,12 @@ Resources:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
+
+        EnvironmentVariables: 
+          - Name: bucket
+            Type: PLAINTEXT
+            Value: "#{website.WebsiteBucket}"
+
       LogsConfig:
         CloudWatchLogs:
           GroupName: !Sub /aws/codebuild/${AWS::StackName}-hugo-build
@@ -430,7 +436,7 @@ Resources:
       QueuedTimeoutInMinutes: 5
       ServiceRole: !Ref CicdRole
       Source: 
-        BuildSpec: !Sub |
+        BuildSpec: |
           version: 0.2
           phases:
             install:
@@ -449,7 +455,8 @@ Resources:
                 - ls -la
             post_build:
               commands:
-                - aws s3 sync ../static s3://#{website.WebsiteBucket}/ --delete
+                - echo ${bucket}
+                - aws s3 sync ../static s3://${bucket}/ --delete
           artifacts:
             discard-paths: yes
             files:
