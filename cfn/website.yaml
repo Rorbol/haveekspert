@@ -70,21 +70,22 @@ Resources:
           CachedMethods: 
             - HEAD
             - GET
-          # CachePolicyId: String
-          Compress: true
-          DefaultTTL: 0
-          # MinTTL: 0
-          # MaxTTL: 31536000
-          # FieldLevelEncryptionId: String
-          # OriginRequestPolicyId: String
-          # SmoothStreaming: Boolean
-          # TrustedSigners: 
-          #   - String
-          ViewerProtocolPolicy: redirect-to-https
-          ForwardedValues:
-            QueryString: false
-            # Headers: []
-            # - Host
+          # CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 #  Managed-CachingOptimized
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad #  Managed-CachingDisabled
+          # Compress: true
+          # DefaultTTL: 0
+          # # MinTTL: 0
+          # # MaxTTL: 31536000
+          # # FieldLevelEncryptionId: String
+          # # OriginRequestPolicyId: String
+          # # SmoothStreaming: Boolean
+          # # TrustedSigners: 
+          # #   - String
+          # ViewerProtocolPolicy: redirect-to-https
+          # ForwardedValues:
+          #   QueryString: false
+          #   # Headers: []
+          #   # - Host
 
         # HttpVersion: String
         IPV6Enabled: true
