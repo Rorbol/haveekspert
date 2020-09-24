@@ -35,7 +35,7 @@ Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      PublicAccessBlockConfiguration:
+      # PublicAccessBlockConfiguration:
       #   BlockPublicAcls: true
       #   BlockPublicPolicy: true
       #   IgnorePublicAcls: true
