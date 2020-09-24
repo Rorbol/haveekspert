@@ -260,6 +260,7 @@ Resources:
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
               StackName: !Sub ${RepositoryName}-website
               TemplatePath: source::cfn/website.yaml
+              TemplateConfiguration: source::cfn/cfg/cdn.yaml
             OutputArtifacts: []
             RunOrder: 2
 
