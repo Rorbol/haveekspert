@@ -35,12 +35,6 @@ Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      # PublicAccessBlockConfiguration:
-      #   BlockPublicAcls: true
-      #   BlockPublicPolicy: true
-      #   IgnorePublicAcls: true
-      #   RestrictPublicBuckets: true
-      # AccessControl: Private
       AccessControl: PublicRead
       VersioningConfiguration:
         Status: Enabled
@@ -88,7 +82,7 @@ Resources:
         HttpVersion: http2
         DefaultRootObject: index.html
         CustomErrorResponses: 
-          - ErrorCachingMinTTL: 60
+          - ErrorCachingMinTTL: 300
             ErrorCode: 404
             ResponseCode: 404
             ResponsePagePath: /404.html
@@ -97,12 +91,6 @@ Resources:
         IPV6Enabled: true
         Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
         Enabled: true
-
-        # CustomErrorResponses: 
-        #   - CustomErrorResponse
-
-        # Restrictions: 
-        #   Restrictions
 
 Outputs:
   WebsiteBucket:

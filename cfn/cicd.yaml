@@ -260,37 +260,28 @@ Resources:
               Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
               StackName: !Sub ${RepositoryName}-website
               TemplatePath: source::cfn/website.yaml
-              TemplateConfiguration: source::cfg/cdn.json
+              TemplateConfiguration: source::cfg/params.json
             OutputArtifacts: []
             RunOrder: 2
 
-          # - Name: deployCdn
-          #   Region: us-east-1
-          #   InputArtifacts:
-          #   - Name: source
-          #   ActionTypeId:
-          #     Category: Deploy
-          #     Owner: AWS
-          #     Version: '1'
-          #     Provider: CloudFormation
-          #   Configuration:
-          #     ActionMode: CREATE_UPDATE
-          #     RoleArn:  !GetAtt [ CicdRole, Arn ] 
-          #     Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
-          #     StackName: !Sub ${RepositoryName}-cdn
-          #     TemplatePath: source::cfn/cdn.yaml
-          #     ParameterOverrides: !Sub
-          #       - |
-          #         {
-          #           "RepositoryName": "${RepositoryName}",
-          #           "GitHubOwner": "${GitHubOwner}",
-          #           "GitHubToken": "${Token}",
-          #           "GitHubTokenType": "Secrets manager ARN" ,
-          #           "BranchName": "${BranchName}"
-          #         }
-          #       - Token: !If [ SetGitHubToken, !Ref GithubTokenSecret, !Ref GitHubToken ]
-          #   OutputArtifacts: []
-          #   RunOrder: 3
+          - Name: deployCdn
+            Region: us-east-1
+            InputArtifacts:
+            - Name: source
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Version: '1'
+              Provider: CloudFormation
+            Configuration:
+              ActionMode: CREATE_UPDATE
+              RoleArn:  !GetAtt [ CicdRole, Arn ] 
+              Capabilities: CAPABILITY_IAM,CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+              StackName: !Sub ${RepositoryName}-cdn
+              TemplatePath: source::cfn/cdn.yaml
+              TemplateConfiguration: source::cfg/params.json
+            OutputArtifacts: []
+            RunOrder: 3
 
         # Static code analysis stage
         - Name: BuildHugoWebsite
