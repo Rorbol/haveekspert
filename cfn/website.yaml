@@ -141,7 +141,7 @@ Resources:
       DistributionConfig: 
         # Origin settings
         Origins: 
-          - DomainName: haveekspert-website-websitebucket-606utyo8qm7i.s3.amazonaws.com
+          - DomainName: !Sub ${WebsiteBucket}.s3.amazonaws.com
             Id: !Sub ${DomainName}-s3-origin
             CustomOriginConfig: 
               OriginProtocolPolicy: http-only
@@ -190,4 +190,3 @@ Outputs:
 
   CloudfrontHostname:
     Value: !GetAtt CloudfrontDistribution.DomainName
-    
