@@ -164,13 +164,13 @@ Resources:
         # Distribution settings
         PriceClass: PriceClass_100
         # WebACLId: String
-        # Aliases: !Split 
-        #   - ","
-        #   - !Join [ ",", [ !Ref DomainName, !Join [ ",", !Ref AlternativeNames ] ] ]
-        # ViewerCertificate:
-        #   AcmCertificateArn: !Ref CloudFrontAcmCertificate
-        #   SslSupportMethod: sni-only
-        #   MinimumProtocolVersion: TLSv1
+        Aliases: !Split 
+          - ","
+          - !Join [ ",", [ !Ref DomainName, !Join [ ",", !Ref AlternativeNames ] ] ]
+        ViewerCertificate:
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1
         HttpVersion: http2
         DefaultRootObject: index.html
         CustomErrorResponses: 
