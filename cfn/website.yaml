@@ -32,6 +32,64 @@ Mappings:
 
 Resources:
 
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      SubjectAlternativeNames: !Ref AlternativeNames
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - !If
+          - ValidateDomain0
+          - DomainName: !Ref DomainName
+            HostedZoneId: !Select [0, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain1
+          - DomainName: !Select [0, AlternativeNames]
+            HostedZoneId: !Select [1, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain2
+          - DomainName: !Select [1, AlternativeNames]
+            HostedZoneId: !Select [2, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain3
+          - DomainName: !Select [2, AlternativeNames]
+            HostedZoneId: !Select [3, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain4
+          - DomainName: !Select [3, AlternativeNames]
+            HostedZoneId: !Select [4, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain5
+          - DomainName: !Select [4, AlternativeNames]
+            HostedZoneId: !Select [5, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain6
+          - DomainName: !Select [5, AlternativeNames]
+            HostedZoneId: !Select [6, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain7
+          - DomainName: !Select [6, AlternativeNames]
+            HostedZoneId: !Select [7, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain8
+          - DomainName: !Select [7, AlternativeNames]
+            HostedZoneId: !Select [8, HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain9
+          - DomainName: !Select [8, AlternativeNames]
+            HostedZoneId: !Select [9, HostedZoneIds]
+          - !Ref AWS::NoValue
+
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -100,4 +158,3 @@ Outputs:
       - ","
       - - !Ref DomainName
         - !Join [",", !Ref AlternativeNames ]
-
