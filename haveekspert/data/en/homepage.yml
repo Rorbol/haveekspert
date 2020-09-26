@@ -5,7 +5,7 @@ banner:
   bg_overlay : true
   # title : "A Digital Marketing <br/> & Design Agency"
   title : "Inspiration og rådgivning<br/>til din have"
-  content : "At designe en have "
+  content : "Livet starter i din have"
   button:
     enable : false
     label : "Discover Our Project"
@@ -15,8 +15,8 @@ banner:
 about:
   enable : true
   title : "Om Berit"
-  description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
-              blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics"
+  description : "Berit er ekspert i haver, grønne områder og bynær natur. Uddannet Landskabsarkitekt fra Københavns Universitet
+                og anlægsgartner fra Roskilde Tekniske Skole har givet et godt teoretisk og praktisk grundlag."
   content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -29,7 +29,7 @@ about:
 portfolio:
   enable : true
   bg_image : "images/featue-bg.jpg"
-  title : "WE BELIEVE IN GREAT IDEAS"
+  title : "Berit holder af naturen"
   content : "
   Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
 
@@ -59,7 +59,7 @@ cta:
   content : "Read more about what we do and our philosophy of design. Judge for yourself The work and results <br> we’ve achieved for other clients, and meet our highly experienced Team who just love to design."
   button:
     enable : true
-    label : "Tell Us Your Story"
+    label : "Fortæl om din have"
     link : "contact"
 
 ############################# Funfacts ###############################

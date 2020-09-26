@@ -1,6 +1,6 @@
 ---
-title: "About Our Company"
-description: "this is meta description"
+title: "Om Berit"
+description: "Landskabsarkitekt og anlægsgartner"
 draft: false
 bg_image: "images/featue-bg.jpg"
 ---

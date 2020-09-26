@@ -1,6 +1,6 @@
 ---
-title: "Drop Us A Note"
-description: "this is meta description"
+title: "Skriv til Berit"
+description: "Fortæl mig om din have"
 draft: false
 bg_image: "images/featue-bg.jpg"
 ---
