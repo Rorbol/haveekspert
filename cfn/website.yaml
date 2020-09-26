@@ -7,6 +7,9 @@ Parameters:
   AlternativeNames:
     Type: CommaDelimitedList
 
+  HostedZoneIds:
+    Type: CommaDelimitedList
+
   CachingPolicy:
     AllowedValues: [CachingOptimized, CachingDisabled ]
     Type: String
@@ -29,6 +32,38 @@ Mappings:
       Id: 88a5eaf4-2fd4-4709-b370-b4c650ea3fcf
     AllViewer:
       Id: 216adef6-5c7f-47e4-b989-5492eafa07d3
+
+Conditions:
+  ValidateDomain0: !And
+    - !Not [ !Equals [ "", !Select [0, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [0, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain1: !And
+    - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain2: !And
+    - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain3: !And
+    - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain4: !And
+    - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain5: !And
+    - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain6: !And
+    - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain7: !And
+    - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain8: !And
+    - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain9: !And
+    - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
 
 Resources:
 
