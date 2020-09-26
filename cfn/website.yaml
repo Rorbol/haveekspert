@@ -37,33 +37,33 @@ Conditions:
   ValidateDomain0: !And
     - !Not [ !Equals [ "", !Select [0, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
     - !Not [ !Equals [ "", !Select [0, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain1: !And
-#     - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain2: !And
-#     - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain3: !And
-#     - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain4: !And
-#     - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain5: !And
-#     - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain6: !And
-#     - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain7: !And
-#     - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain8: !And
-#     - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
-#   ValidateDomain9: !And
-#     - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
-#     - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain1: !And
+    - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [1, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain2: !And
+    - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [2, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain3: !And
+    - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [3, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain4: !And
+    - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [4, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain5: !And
+    - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [5, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain6: !And
+    - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [6, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain7: !And
+    - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [7, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain8: !And
+    - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [8, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
+  ValidateDomain9: !And
+    - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Ref DomainName, !Join [ ",", !Ref AlternativeNames ], ",,,,,,,,,,,"]]]]]]
+    - !Not [ !Equals [ "", !Select [9, !Split [",", !Join [ ",", [!Join [ ",", !Ref HostedZoneIds ], ",,,,,,,,,,,"]]]]]]
 
 Resources:
 
@@ -77,53 +77,53 @@ Resources:
         - !If
           - ValidateDomain0
           - DomainName: !Ref DomainName
-            HostedZoneId: !Select [0, HostedZoneIds]
+            HostedZoneId: !Select [0, !Ref HostedZoneIds]
           - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain1
-      #     - DomainName: !Select [0, AlternativeNames]
-      #       HostedZoneId: !Select [1, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain2
-      #     - DomainName: !Select [1, AlternativeNames]
-      #       HostedZoneId: !Select [2, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain3
-      #     - DomainName: !Select [2, AlternativeNames]
-      #       HostedZoneId: !Select [3, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain4
-      #     - DomainName: !Select [3, AlternativeNames]
-      #       HostedZoneId: !Select [4, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain5
-      #     - DomainName: !Select [4, AlternativeNames]
-      #       HostedZoneId: !Select [5, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain6
-      #     - DomainName: !Select [5, AlternativeNames]
-      #       HostedZoneId: !Select [6, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain7
-      #     - DomainName: !Select [6, AlternativeNames]
-      #       HostedZoneId: !Select [7, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain8
-      #     - DomainName: !Select [7, AlternativeNames]
-      #       HostedZoneId: !Select [8, HostedZoneIds]
-      #     - !Ref AWS::NoValue
-      #   - !If
-      #     - ValidateDomain9
-      #     - DomainName: !Select [8, AlternativeNames]
-      #       HostedZoneId: !Select [9, HostedZoneIds]
-      #     - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain1
+          - DomainName: !Select [0, !Ref AlternativeNames]
+            HostedZoneId: !Select [1, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain2
+          - DomainName: !Select [1, !Ref AlternativeNames]
+            HostedZoneId: !Select [2, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain3
+          - DomainName: !Select [2, !Ref AlternativeNames]
+            HostedZoneId: !Select [3, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain4
+          - DomainName: !Select [3, !Ref AlternativeNames]
+            HostedZoneId: !Select [4, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain5
+          - DomainName: !Select [4, !Ref AlternativeNames]
+            HostedZoneId: !Select [5, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain6
+          - DomainName: !Select [5, !Ref AlternativeNames]
+            HostedZoneId: !Select [6, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain7
+          - DomainName: !Select [6, !Ref AlternativeNames]
+            HostedZoneId: !Select [7, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain8
+          - DomainName: !Select [7, !Ref AlternativeNames]
+            HostedZoneId: !Select [8, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
+        - !If
+          - ValidateDomain9
+          - DomainName: !Select [8, !Ref AlternativeNames]
+            HostedZoneId: !Select [9, !Ref HostedZoneIds]
+          - !Ref AWS::NoValue
 
   WebsiteBucket:
     Type: AWS::S3::Bucket
