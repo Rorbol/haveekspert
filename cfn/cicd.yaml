@@ -410,7 +410,6 @@ Resources:
                 - hugo -D --destination ../public
             post_build:
               commands:
-                - echo ${bucket}
                 - aws s3 sync ../public s3://${bucket}/ --delete --acl public-read
                 - aws cloudfront create-invalidation --distribution-id ${distribution}
           artifacts:
