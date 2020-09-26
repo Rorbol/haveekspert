@@ -183,12 +183,3 @@ Resources:
         IPV6Enabled: true
         Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
         Enabled: true
-
-Outputs:
-  WebsiteBucket:
-    Value: !Ref WebsiteBucket
-  Test:
-    Value: !Join
-      - ","
-      - - !Ref DomainName
-        - !Join [",", !Ref AlternativeNames ]
