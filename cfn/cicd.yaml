@@ -282,28 +282,14 @@ Resources:
                   "name":   "bucket",
                   "value":  "#{website.WebsiteBucket}",
                   "type":   "PLAINTEXT"
+                },{
+                  "name":   "distribution",
+                  "value":  "#{website.CloudfrontDistribution}",
+                  "type":   "PLAINTEXT"
                 }]
             OutputArtifacts:
             - Name: hugo
             RunOrder: 1
-
-        # # Publish website
-        # - Name: PublishStaticWebsite
-        #   Actions:
-        #   - Name: hugo-static-publish
-        #     InputArtifacts:
-        #     - Name: hugo
-        #     ActionTypeId:
-        #       Category: Deploy
-        #       Owner: AWS
-        #       Version: '1'
-        #       Provider: S3
-        #     Configuration:
-        #       # ObjectKey: "cfn/#{SourceVariables.BranchName}/#{SourceVariables.CommitterDate}"
-        #       Extract: "true"
-        #       BucketName: "#{website.WebsiteBucket}"
-        #     OutputArtifacts: []
-        #     RunOrder: 1
 
   CfnLintLogGroup:
     Type: AWS::Logs::LogGroup
@@ -426,6 +412,7 @@ Resources:
               commands:
                 - echo ${bucket}
                 - aws s3 sync ../public s3://${bucket}/ --delete --acl public-read
+                - aws cloudfront create-invalidation --distribution-id ${distribution}
           artifacts:
             discard-paths: yes
             files:

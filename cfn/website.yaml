@@ -190,3 +190,6 @@ Outputs:
 
   CloudfrontHostname:
     Value: !GetAtt CloudfrontDistribution.DomainName
+
+  CloudfrontDistribution:
+    Value: !GetAtt CloudfrontDistribution
