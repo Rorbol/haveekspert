@@ -62,6 +62,7 @@ logo_width = "150px"
 description = "Haveekspert Berit Rørbøl - Råd og inspiration til din have"
 author = "Themefisher"
 # Contact Information
+vatno = "34246033"
 phone = "71 74 76 77"
 email = "berit@rorbol.dk"
 location = "Bredevej 43C, 2830 Virum"

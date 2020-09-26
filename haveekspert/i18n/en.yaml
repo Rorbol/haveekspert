@@ -28,3 +28,5 @@
   translation: Tags
 - id: categories
   translation: Kategorier
+- id: vatno
+  translation: CVR nummer
