@@ -135,8 +135,7 @@ Resources:
         IndexDocument: index.html
         ErrorDocument: error.html
 
-  # CloudfrontDistribution:
-  Cdn:
+  CloudfrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties: 
       DistributionConfig: 
