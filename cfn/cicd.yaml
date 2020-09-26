@@ -245,7 +245,7 @@ Resources:
             OutputArtifacts: []
             RunOrder: 1
 
-          - Name: deployWebsite
+          - Name: createWebsite
             Namespace: website
             InputArtifacts:
             - Name: source
