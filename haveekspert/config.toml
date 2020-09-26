@@ -1,5 +1,5 @@
 ################################# Default configuration ###################
-baseURL = "http://rorbol.dk"
+baseURL = "https://www.rorbol.dk"
 title = "Haveekspert Berit Rørbøl"
 theme = "airspace-hugo"
 # post pagination
