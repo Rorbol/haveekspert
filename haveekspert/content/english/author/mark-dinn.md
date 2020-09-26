@@ -2,7 +2,7 @@
 title: "Mark Dinn"
 email: "email2@example.org"
 bg_image: "images/featue-bg.jpg"
-draft: false
+draft: true
 social:
   - icon : "ion-social-facebook-outline" #ionicon pack v2 : https://ionicons.com/v2/
     link : "#"

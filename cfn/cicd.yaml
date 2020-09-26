@@ -411,7 +411,7 @@ Resources:
             post_build:
               commands:
                 - aws s3 sync ../public s3://${bucket}/ --delete --acl public-read
-                - aws cloudfront create-invalidation --distribution-id ${distribution} --paths "/*"
+                # - aws cloudfront create-invalidation --distribution-id ${distribution} --paths "/*"
           artifacts:
             discard-paths: yes
             files:

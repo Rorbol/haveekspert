@@ -12,7 +12,7 @@ about:
           dolor sit amet, consectetur adipisicing elit. Provident, neque!"
 
   button:
-    enable : true
+    enable : false
     label : "Download Company Profile"
     link : "#"
 
@@ -50,26 +50,26 @@ about:
 ################################ feature #####################################
 features:
   enable : true
-  title : "We are indepented Design & Development Agency"
+  title : "Haveekspert "
   feature_item:
     # feature item loop
     - icon : "ion-ios-color-filter-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "IOS App Development"
+      name : "Havebesøg"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
       
     # feature item loop
     - icon : "ion-ios-unlocked-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "App Secutity"
+      name : "Råd og vejledning"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
       
     # feature item loop
     - icon : "ion-ios-game-controller-b-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "Games Development"
+      name : "Bæredygtig have"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
       
     # feature item loop
     - icon : "ion-ios-mic-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "Animation and Editing"
+      name : "Sansehave"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
       
     # feature item loop

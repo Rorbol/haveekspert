@@ -1,6 +1,6 @@
 ---
-title: "Our Pricing"
+title: "Priser"
 description: "this is meta description"
-draft: false
+draft: true
 bg_image: "images/featue-bg.jpg"
 ---
