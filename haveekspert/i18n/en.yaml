@@ -1,30 +1,30 @@
 - id: last_update
-  translation: Last updated
+  translation: Senest opdateret
 - id: phone
-  translation: Phone
+  translation: Telefon
 - id: email
-  translation: Email
+  translation: E-mail
 - id: location
-  translation: Location
+  translation: Addresse
 - id: buy_now
-  translation: Buy Now
+  translation: Bestil Tid
 - id: address_title
-  translation: Stop By For A visit
+  translation: Kontakt detaljer
 - id: submit
-  translation: Send Message
+  translation: Send Besked
 - id: all
   translation: All
 - id: posted_by
-  translation: Posted By
+  translation: Skrevet Af
 - id: read_more
-  translation: Continue Reading
+  translation: Læs Videre
 - id: latest_posts
   translation: Latest Posts
 - id: page_prev
-  translation: Prev
+  translation: Forrige
 - id: page_next
-  translation: Next
+  translation: Næste
 - id: tags
   translation: Tags
 - id: categories
-  translation: Categories
+  translation: Kategorier
