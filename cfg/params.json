@@ -1,7 +1,7 @@
 {
   "Parameters" : {
     "DomainName": "rorbol.dk",
-    "AlternativeNames": "www.rorbol.dk,rorbol.com,www.rorbol.com,xn--rrbl-grac.dk,www.xn--rrbl-grac.dk,roerboel.dk,www.roerboel.dk",
+    "AlternativeNames": "www.rorbol.dk,rorbol.com,www.rorbol.com,xn--rrbl-grac.dk,www.xn--rrbl-grac.dk,roerboel.dk,www.roerboel.dk,beror.dk,www.beror.dk",
     "HostedZoneIds": "Z1T2792P4U7CNW,Z1T2792P4U7CNW,Z14HFHYO6XTVS3,Z14HFHYO6XTVS3,Z114CJ6CGWCIUK,Z114CJ6CGWCIUK,Z1AS6T5VJ0NIYT,Z1AS6T5VJ0NIYT",
     "CachingPolicy": "CachingDisabled"
   }
