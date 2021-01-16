@@ -3,9 +3,9 @@ pricing:
   enable : true
   pricing_table:
     # pricing table loop
-    - name : "Basic"
-      price: "$99"
-      content : "Perfect for single freelancers who work by themselves"
+    - name : "Havebesøg"
+      price: "2.499 kr."
+      content : "Hjemmebesøg af 1,5 til 2 timers varighed"
       link : "#"
       services:
         - Unlimited agents
@@ -16,9 +16,9 @@ pricing:
         - 24/7 Tech Support
         
     # pricing table loop
-    - name : "Premium"
-      price: "$199"
-      content : "Suitable for small businesses with up to 5 employees"
+    - name : "Haveskitse"
+      price: "4.999 kr."
+      content : "Hjemmebesøg i haven og opfølgning med skitser. 5-6 timer"
       link : "#"
       services:
         - Unlimited agents
@@ -29,9 +29,9 @@ pricing:
         - 24/7 Tech Support
         
     # pricing table loop
-    - name : "Advance"
-      price: "$299"
-      content : "Suitable for large businesses with unlimited employees"
+    - name : "Haveplan"
+      price: "Efter aftale"
+      content : "Hjemmebesøg i din have med efterfølgende arkitekttegninger og beskrivelser"
       link : "#"
       services:
         - Unlimited agents
