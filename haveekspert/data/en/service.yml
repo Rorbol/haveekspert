@@ -18,19 +18,19 @@ featured_service:
   enable : true
   service_item:
     # featured service item loop
-    - name : "Interface Design"
+    - name : "Havebesøg"
       icon : "ion-erlenmeyer-flask"
       color : "primary"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
       
     # featured service item loop
-    - name : "Product Branding"
+    - name : "Haveskitse"
       icon : "ion-leaf"
       color : "primary-dark"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
       
     # featured service item loop
-    - name : "Game Development"
+    - name : "Arkitekttegnet haveplan"
       icon : "ion-lightbulb"
       color : "primary-darker"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
@@ -39,49 +39,50 @@ featured_service:
 ############################# Service ###############################
 service:
   enable : true
-  title : "Our Services"
-  description : "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, <br> there live the
-          blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics"
+  title : "Berit rådgiver i"
+  description : "Berit har lang erfaring i mange aspekter af haver og har set det meste. 
+    Skulle du have et særligt behov, der ikke falder i nedenstående kasser er du altid velkommen til at tage kontakt. 
+    Hun har sikker en god løsning eller ide alligevel :)"
   service_item:
     # service item loop
     - icon : ion-coffee #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Branding
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Indretning af haven
+      content: "Gør haven levende ved at udnytte alle rummene i den og se den fra en ny side"
 
     # service item loop
     - icon : ion-compass #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Web Design
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Bæredygtige haver
+      content: "Går du ind for bæredygtige haver, der er giftfri? Måske vil du dyrke egne grøntsager"
 
     # service item loop
     - icon : ion-image #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: App Design
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Vilde haver
+      content: "Den sjette massedød er i fuld gang. Giv bierne en hjælpene hånd ved at omlægge til vild have"
 
     # service item loop
     - icon : ion-bug #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Start Up
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Sanse haver
+      content: "Gå på opdagelse i din nye levende have og se dens dufte, lyder og farver på nye måder"
 
     # service item loop
     - icon : ion-headphone #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Logo Design
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Nemme haver
+      content: "Du vil gerne have en spændende have men gidder ikke besværret?"
 
     # service item loop
     - icon : ion-leaf #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Development
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Blomster haver
+      content: "Hvad med en have, hvor du kan plukke en buket i haven hele året"
 
     # service item loop
     - icon : ion-planet #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Brand Identity
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: En aktiv have
+      content: "En have med plads og muligheder for sport og leg til både børn og voksne"
 
     # service item loop
     - icon : ion-earth #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
-      name: Brand Identity
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
+      name: Klassiske haver
+      content: "Få inspiration til den klassiske have, og forskellige stilarter gennem tiden"
       
 ############################# call to action #################################
 cta:
