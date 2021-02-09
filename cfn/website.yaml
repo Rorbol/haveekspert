@@ -125,16 +125,6 @@ Resources:
             HostedZoneId: !Select [9, !Ref HostedZoneIds]
           - !Ref AWS::NoValue
 
-# www.rorbol.dk,
-# rorbol.com,
-# www.rorbol.com,
-# xn--rrbl-grac.dk,
-# www.xn--rrbl-grac.dk,
-# roerboel.dk,
-# ww.roerboel.dk,
-# beror.dk,
-# www.beror.dk
-
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -194,16 +184,16 @@ Resources:
         Comment: !Sub "Static S3 website for ${DomainName} - Managed by ${AWS::StackName}"
         Enabled: true
 
-  ApexCloudfrontAlias:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      AliasTarget:
-        DNSName: !Ref CloudfrontDistribution
-        HostedZoneId: Z2FDTNDATAQYW2
-      Comment: Apex cloudfront record
-      HostedZoneName: !Sub '${DomainName}.'
-      Name: !Sub '${DomainName}.'
-      Type: A
+  # ApexCloudfrontAlias:
+  #   Type: AWS::Route53::RecordSet
+  #   Properties:
+  #     AliasTarget:
+  #       DNSName: !Ref CloudfrontDistribution
+  #       HostedZoneId: Z2FDTNDATAQYW2
+  #     Comment: Apex cloudfront record
+  #     HostedZoneName: !Sub '${DomainName}.'
+  #     Name: !Sub '${DomainName}.'
+  #     Type: A
 
   WwwAliasRecord:
     Type: AWS::Route53::RecordSet
