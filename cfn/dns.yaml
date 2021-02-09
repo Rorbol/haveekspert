@@ -104,17 +104,7 @@ Resources:
       HostedZoneId: !Ref HostedZone
       Name: !Sub '${DomainName}.'
       Type: A
-  # WwwRedirect:
-  #   Type: AWS::Route53::RecordSet
-  #   Condition: CreateRedirect
-  #   Properties: 
-  #     AliasTarget: 
-  #       DNSName: s3-website-eu-west-1.amazonaws.com.
-  #       HostedZoneId: Z1BKCTXD74EZPE
-  #     Comment: Www s3 redirect record
-  #     HostedZoneId: !Ref HostedZone
-  #     Name: !Sub 'www.${DomainName}.'
-  #     Type: A
+
   ApexRedirectBucket:
     Type: AWS::S3::Bucket
     Condition: CreateRedirect
