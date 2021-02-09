@@ -211,7 +211,7 @@ Resources:
     Properties: 
       AliasTarget: 
         DNSName: !Sub s3-website-${AWS::Region}.amazonaws.com.
-        HostedZoneId: !FindInMap [RegionMap, !Ref 'AWS::Region', s3WebsiteHostedZoneID]
+        HostedZoneId: !FindInMap [ RegionMap, !Ref 'AWS::Region', s3WebsiteHostedZoneID ]
       Comment: Apex s3 redirect record
       HostedZoneId: !Select [0, !Ref HostedZoneIds]
       Name: !Sub '${DomainName}.'
