@@ -57,6 +57,19 @@ Conditions:
   CreateApexRecord: !Equals [ !Ref ApexType, A-record ]
   CreateRedirect: !Equals [ !Ref ApexType, Redirect ]
   CreateApexCloudfrontAlias: !Equals [ !Ref ApexType, CloudFront ]
+Mappings: 
+  RegionMap: 
+    us-east-1:
+      s3WebsiteHostedZoneID: Z3AQBSTGFYJSTF
+    us-west-1:
+      s3WebsiteHostedZoneID: Z2F56UZL2M1ACD
+    eu-west-1:
+      s3WebsiteHostedZoneID: Z1BKCTXD74EZPE
+    eu-central-1:
+      s3WebsiteHostedZoneID: Z21DNDUVLTQW6Q
+    eu-north-1:
+      s3WebsiteHostedZoneID: Z3BAZG2TWCNX0D
+
 Resources:
   HostedZone:
     Type: AWS::Route53::HostedZone
@@ -98,8 +111,10 @@ Resources:
     Condition: CreateRedirect
     Properties: 
       AliasTarget: 
-        DNSName: s3-website-eu-west-1.amazonaws.com.
-        HostedZoneId: Z1BKCTXD74EZPE
+        # DNSName: s3-website-eu-west-1.amazonaws.com.
+        # HostedZoneId: Z1BKCTXD74EZPE
+        DNSName: !Sub s3-website-${AWS::Region}.amazonaws.com.
+        HostedZoneId: !FindInMap [RegionMap, !Ref AWS::Region, s3WebsiteHostedZoneID]
       Comment: Apex s3 redirect record
       HostedZoneId: !Ref HostedZone
       Name: !Sub '${DomainName}.'

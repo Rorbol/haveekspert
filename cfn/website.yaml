@@ -213,7 +213,7 @@ Resources:
         DNSName: !Sub s3-website-${AWS::Region}.amazonaws.com.
         HostedZoneId: !FindInMap [RegionMap, !Ref AWS::Region, s3WebsiteHostedZoneID]
       Comment: Apex s3 redirect record
-      HostedZoneName: !Sub '${DomainName}.'
+      HostedZoneId: !Select [0, !Ref HostedZoneIds]
       Name: !Sub '${DomainName}.'
       Type: A
 
@@ -224,7 +224,7 @@ Resources:
         DNSName: !GetAtt CloudfrontDistribution.DomainName
         HostedZoneId: Z2FDTNDATAQYW2
       Comment: Www cloudfront record
-      HostedZoneName: !Sub '${DomainName}.'
+      HostedZoneId: !Select [0, !Ref HostedZoneIds]
       Name: !Sub 'www.${DomainName}.'
       Type: A
 
