@@ -44,8 +44,8 @@ link = "plugins/slick/slick.min.js"
 link = "plugins/magnific-popup/jquery.magnific-popup.min.js"
 [[params.plugins.js]]
 link = "plugins/shuffle/shuffle.min.js"
-[[params.plugins.js]]
-link = "plugins/google-map/gmap.js"
+# [[params.plugins.js]]
+# link = "plugins/google-map/gmap.js"
 
 
 ############################### widgets #################################
@@ -60,7 +60,7 @@ logo = "images/logo.png"
 logo_width = "150px"
 # Meta data
 description = "Haveekspert Berit Rørbøl - Råd og inspiration til din have"
-author = "Themefisher"
+author = ""
 # Contact Information
 vatno = "34246033"
 phone = "71 74 76 77"
@@ -126,20 +126,20 @@ languageCode = "en-us"
 contentDir = "content/english"
 weight = 1
 # copyright
-copyright = "Copyright &copy; 2020 [Berit Rørbøl](https://rorbol.dk)"
+copyright = "Copyright &copy; 2021 [Berit Rørbøl](https://rorbol.dk)"
 
 
 ######################### english navigation #############################
 # main menu
 [[Languages.en.menu.main]]
-name = "Hjem"
+name = "Om Berit"
 URL = "/"
 weight = 1
 
-[[Languages.en.menu.main]]
-name = "Om Berit"
-URL = "about"
-weight = 2
+# [[Languages.en.menu.main]]
+# name = "Om Berit"
+# URL = "about"
+# weight = 2
 
 [[Languages.en.menu.main]]
 name = "Ydelser"

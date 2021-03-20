@@ -1,9 +1,8 @@
 ############################### Banner ##############################
 banner:
   enable : true
-  bg_image : "images/slider-bg.jpg"
+  bg_image : "images/banner.jpeg"
   bg_overlay : true
-  # title : "A Digital Marketing <br/> & Design Agency"
   title : "Inspiration, råd og vejledning til din have"
   content : "Livet starter i din have"
   button:
@@ -15,18 +14,15 @@ banner:
 about:
   enable : true
   title : "Om Berit"
-  description : "Berit er ekspert i haver, grønne områder og bynær natur. Hun er uddannet Landskabsarkitekt fra Københavns Universitet,
-                anlægsgartner fra Roskilde Tekniske Skole og har flere års erfaring med havens rum og arkitektur."
-  content : "Berit har arbejdet med haver siden 2003 og som selvstændig siden 2012. Gennem årene har hun hjulpet flere glade husejere med at 
-            designe deres oase. Gennem solid rådgivning vil Berit i samarbejde med 
-            
-            havearkitekt
-            haverådgivning
-            haveekspert
-
-            
-            
-            "
+  description : "Berit er ekspert i haver. Siden 2003 har hun arbejdet med haver, grønne områder og bynær natur.
+                 I dag arbejder hun som haverådgiver og foredragsholder, ved siden af sit arbejde som Haveekspert i Videnscenter Bolius."
+  content : "Berit er uddannet Anlægsgartner i grøn plejeteknik og Landskabsarkitekt (Cand.hort.arch) fra Københavns Universitet.
+             Gennem sit arbejde har hun mange års erfaring med havens rum og arkitektur - både den praktisk, teoretisk og æstetiske.
+             Denne lange erfaring og indsigt har gjort Berit til en hyppigt citeret haveekspert af blandt andet DR, Jyllands Posten og Ritzaus Bureau.
+             <br/>
+             <br/>
+             I dag anvender hun sin viden til at rådgive glade haveejere med at designe deres personlige oase. Sammen udformer de den have,
+             der kombinerer drømme, ambitioner, økonomi og faktiske forhold."
   image : "images/beritrorbol.jpg"
 
 

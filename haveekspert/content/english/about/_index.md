@@ -1,6 +1,6 @@
 ---
 title: "Om Berit"
 description: "Landskabsarkitekt og haverådgiver"
-draft: false
+draft: true
 bg_image: "images/garden.jpg"
 ---

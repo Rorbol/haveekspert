@@ -1,16 +1,22 @@
 ########################### about service #############################
 about:
   enable : true
-  title : "Creative UX/UI Design Agency"
-  content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate soluta corporis odit, optio
-          cum! Accusantium numquam ab, natus excepturi architecto earum ipsa aliquam, illum, omnis rerum, eveniet
-          officia nihil. Eum quod iure nulla, soluta architecto distinctio. Nesciunt odio ullam expedita, neque fugit
-          maiores sunt perferendis placeat autem animi, nihil quis suscipit quibusdam ut reiciendis doloribus natus nemo
-          id quod illum aut culpa perspiciatis consequuntur tempore? Facilis nam vitae iure quisquam eius harum
-          consequatur sapiente assumenda, officia voluptas quas numquam placeat, alias molestias nisi laudantium
-          nesciunt perspiciatis suscipit hic voluptate corporis id distinctio earum. Dolor reprehenderit fuga dolore
-          officia adipisci neque!"
-  image : "images/company/company-group-pic.jpg"
+  title : "Havebesøg, haveskitse eller arkitekttegnet haveplan"
+  content : "Når arkitekten kommer på besøg starter en spændende og kreativ proces,
+            hvor der bliver vendt nogle løsninger og ideer du måske ikke selv var kommet på.
+            Som landskabsarkitekt har Berit et æstetisk og funktionelt overblik samt en plantekendskab,
+            praktisk og lovgivningsmæssig viden, som kommer dig til gode. 
+            <br/>
+            <br/>
+            Berit sørger for at stilen er gennemført - fra de store linjer helt ned i detaljen.
+            En unik have, der er skædersyet efter dine personlige ønsker og behov.
+            Berit er uvildig, og kan rådgive dig uden økonomiske særinteresser.
+            "
+            # Vælg mellem et havebesøg, hvor i gennemgår eksisterende beplantning og vender nye ideer,
+            # en haveskitse hvor Berit følger op på besøget med skitser og plantenavne eller 
+            # en fuld haveplan, der er målfast og klar til at håndværkeren kan gå i gang.
+            # "
+  image : "images/architechtgarden.jpeg"
 
 
 ########################## featured service ############################
@@ -21,19 +27,20 @@ featured_service:
     - name : "Havebesøg"
       icon : "ion-erlenmeyer-flask"
       color : "primary"
-      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
+      # content : "Berit besøger jeres have, og sammen gennemgår i eksisterende beplantning"
+      content : "I gennemgår eksisterende beplantning, vender ønsker, behov og ideer." #" Besøget varer 1,5 til 2 timer."
       
     # featured service item loop
     - name : "Haveskitse"
       icon : "ion-leaf"
       color : "primary-dark"
-      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
+      content : "Havebesøget følges op med en håndskitse og lister med planteforslag."
       
     # featured service item loop
     - name : "Arkitekttegnet haveplan"
       icon : "ion-lightbulb"
       color : "primary-darker"
-      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim impedit repudiandae omnis est temporibus."
+      content : "Fuld haveplan, med målfaste tegninger klar til at håndværkeren kan begynde."
 
       
 ############################# Service ###############################
@@ -41,48 +48,47 @@ service:
   enable : true
   title : "Berit rådgiver i"
   description : "Berit har lang erfaring i mange aspekter af haver og har set det meste. 
-    Skulle du have et særligt behov, der ikke falder i nedenstående kasser er du altid velkommen til at tage kontakt. 
-    Hun har sikker en god løsning eller ide alligevel :)"
+    Skulle du have et særligt behov, der ikke falder i nedenstående kasser er du altid velkommen til at tage kontakt alligevel."
   service_item:
     # service item loop
     - icon : ion-coffee #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Indretning af haven
-      content: "Gør haven levende ved at udnytte alle rummene i den og se den fra en ny side"
+      content: "Levende have med udnyttelse af alle rummene"
 
-    # service item loop
+    # service item loop https://icon-library.com/icon/environment-icon-21.html
     - icon : ion-compass #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Bæredygtige haver
-      content: "Går du ind for bæredygtige haver, der er giftfri? Måske vil du dyrke egne grøntsager"
+      content: "Giftfri have med egne grøntsager?"
 
     # service item loop
     - icon : ion-image #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Vilde haver
-      content: "Den sjette massedød er i fuld gang. Giv bierne en hjælpene hånd ved at omlægge til vild have"
+      content: "Hjælp bierne og omlæg til vild have"
 
-    # service item loop
-    - icon : ion-bug #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
+    # service item loop https://www.iconfinder.com/search/?q=zen
+    - icon : ion-bug #ionicon pack v2 : https://ionicons.com/v2/
       name: Sanse haver
-      content: "Gå på opdagelse i din nye levende have og se dens dufte, lyder og farver på nye måder"
+      content: "Opdag din levende have og sans dufte, lyder og farver "
 
-    # service item loop
+    # service item loop hængekøje
     - icon : ion-headphone #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Nemme haver
-      content: "Du vil gerne have en spændende have men gidder ikke besværret?"
+      content: "En spændende have uden alt besværret?"
 
-    # service item loop
+    # service item loop blomster
     - icon : ion-leaf #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Blomster haver
-      content: "Hvad med en have, hvor du kan plukke en buket i haven hele året"
+      content: "Pluk en buket i haven hele året"
 
-    # service item loop
+    # service item loop workput
     - icon : ion-planet #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: En aktiv have
-      content: "En have med plads og muligheder for sport og leg til både børn og voksne"
+      content: "Mulighed for sport og leg til både børn og voksne"
 
     # service item loop
     - icon : ion-earth #ionicon pack v2 : https://ionicons.com/v2/ #ionicon pack v2 : https://ionicons.com/v2/
       name: Klassiske haver
-      content: "Få inspiration til den klassiske have, og forskellige stilarter gennem tiden"
+      content: "Inspiration til den klassiske have, og stilarter gennem tiden"
       
 ############################# call to action #################################
 cta:
