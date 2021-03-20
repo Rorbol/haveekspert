@@ -136,15 +136,10 @@ name = "Om Berit"
 URL = "/"
 weight = 1
 
-# [[Languages.en.menu.main]]
-# name = "Om Berit"
-# URL = "about"
-# weight = 2
-
 [[Languages.en.menu.main]]
 name = "Ydelser"
 URL = "service"
-weight = 4
+weight = 2
 
 # [[Languages.en.menu.main]]
 # name = "Blog"
@@ -154,31 +149,32 @@ weight = 4
 [[Languages.en.menu.main]]
 name = "Priser"
 URL = "pricing"
-weight = 6
+weight = 3
   
 [[Languages.en.menu.main]]
 name = "Kontakt"
 URL = "contact"
-weight = 7
+weight = 4
 
 
 # footer menu
+
 [[Languages.en.menu.footer]]
 name = "Om Berit"
-URL = "about"
+URL = "/"
 weight = 1
 
 [[Languages.en.menu.footer]]
 name = "Ydelser"
-URL = "service"
-weight = 3
+URL = "/service/index.html"
+weight = 2
 
 [[Languages.en.menu.footer]]
 name = "Priser"
-URL = "pricing"
-weight = 4
+URL = "/pricing/index.html"
+weight = 3
 
 [[Languages.en.menu.footer]]
 name = "Kontakt"
-URL = "contact"
-weight = 6
+URL = "/contact/index.html"
+weight = 4

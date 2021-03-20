@@ -67,47 +67,43 @@ cta:
 funfacts:
   enable : true
   title : "Fun Facts Om Berit"
-  description : "'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, <br> there live the
-          blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics'"
+  description : "Med 18 års erfaring som gartner og siden landskabsarkitekt"
   funfact_item:
     # funfacts item loop
     - icon : "ion-ios-chatboxes-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "Års 'have' uddanelse"
-      count : "9"
+      name : "Meter hæk klippet"
+      count : "119650"
+      
+    # funfacts item loop
+    - icon : "ion-ios-timer-outline" #ionicon pack v2 : https://ionicons.com/v2/
+      name : "Plantede stauder, træer og buske"
+      count : "164890"
+      
+    # funfacts item loop
+    - icon : "ion-ios-compose-outline" #ionicon pack v2 : https://ionicons.com/v2/
+      name : "Haveejere hjulpet"
+      count : "1261"
       
     # funfacts item loop
     - icon : "ion-map" #ionicon pack v2 : https://ionicons.com/v2/
       name : "Kvadratmeter egen have"
       count : "3697"
       
-    # funfacts item loop
-    - icon : "ion-ios-compose-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "Projects Completed"
-      count : "125"
-      
-    # funfacts item loop
-    - icon : "ion-ios-timer-outline" #ionicon pack v2 : https://ionicons.com/v2/
-      name : "kg hund"
-      count : "75"
-
   testimonial_slider:
     # testimonial item loop
     - name : "Raymond Roy"
       image : "images/clients/avater-1.jpg"
-      designation : "CEO-Themefisher"
-      content : "This Company created an e-commerce site with the tools to make our business a success, with innovative
-                ideas we feel that our site has unique elements that make us stand out from the crowd."
+      designation : "Haveejer"
+      content : ""
                 
     # testimonial item loop
     - name : "Randi Renin"
       image : "images/clients/avater-1.jpg"
-      designation : "CEO-Themefisher"
-      content : "This Company created an e-commerce site with the tools to make our business a success, with innovative
-                ideas we feel that our site has unique elements that make us stand out from the crowd."
+      designation : "Haveejer"
+      content : ""
                 
     # testimonial item loop
     - name : "Rose Rio"
       image : "images/clients/avater-3.jpg"
-      designation : "CEO-Themefisher"
-      content : "This Company created an e-commerce site with the tools to make our business a success, with innovative
-                ideas we feel that our site has unique elements that make us stand out from the crowd."
+      designation : "Haveejer"
+      content : ""
