@@ -5,42 +5,43 @@ pricing:
     # pricing table loop
     - name : "Havebesøg"
       price: "2.499 kr."
-      content : "Hjemmebesøg af 1,5 til 2 timers varighed"
-      link : "#"
+      content : "Velegnet til den allerede anlagte have"
+      link : "/contact/index.html"
       services:
-        - Unlimited agents
-        - 10 PSD Design
-        - HTML5 Markup
-        - Basic SEO
-        - Email Marketing
-        - 24/7 Tech Support
+        - Inspiration og rådgivning på stedet
+        - Gennemgang af eksisterende beplatnning
+        - Ideer og løsninger til indretning
+        - Feedback på egne ideer og tanker
+        - Forslag til velegnet beplantning
+        - 1,5-2 timers varighed. 
+        - Kørsel i hovedstadsområdet inkluderet
         
     # pricing table loop
     - name : "Haveskitse"
       price: "4.999 kr."
-      content : "Hjemmebesøg i haven og opfølgning med skitser. 5-6 timer"
-      link : "#"
+      # content : "Hjemmebesøg i haven og opfølgning med skitser. 5-6 timer"
+      content : "Arkitektens forslag til nyanlægning af haven"
+      link : "/contact/index.html"
       services:
-        - Unlimited agents
-        - 10 PSD Design
-        - HTML5 Markup
-        - Basic SEO
-        - Email Marketing
-        - 24/7 Tech Support
+        - Forudgående havebesøg inkluderet
+        - Baseret på dine egne opmålinger samt ønsker og ideer
+        - Håndtagnet haveskitse af designforslag
+        - Plantelister med forslag til beplantning
+        - Placering og udformning af træer, bede, planter og terasser, m.v.
+        - Kørsel i hovedstadsområdet inkluderet
         
     # pricing table loop
     - name : "Haveplan"
       price: "Efter aftale"
-      content : "Hjemmebesøg i din have med efterfølgende arkitekttegninger og beskrivelser"
-      link : "#"
+      content : "Færdige arkitekttegninger klar til at arbejde efter"
+      link : "/contact/index.html"
       services:
-        - Unlimited agents
-        - 10 PSD Design
-        - HTML5 Markup
-        - Basic SEO
-        - Email Marketing
-        - 24/7 Tech Support
-        
+        - Forudgående havebesøg inkluderet
+        - Målfast arbejdstegning til brug for evt. entreprenør
+        - Hjælp til valg af evt. belægninger, hegn & stakit, drivhus etc.
+        - Alle planter er beskrevet med både antal, nr. samt danske og latinske navne.
+        - Regvandsløsninger
+
 ############################# call to action #################################
 cta:
   enable : false

@@ -1,6 +1,6 @@
 ---
 title: "Priser"
-description: "this is meta description"
+description: "Kontakt Berit "
 draft: true
 bg_image: "images/belis.jpg"
 ---
