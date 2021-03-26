@@ -2,7 +2,7 @@
 banner:
   enable : true
   bg_image : "images/banner.jpeg"
-  bg_overlay : true
+  bg_overlay : false
   title : "Inspiration, råd og vejledning til din have"
   content : "Livet starter i din have"
   button:
@@ -26,24 +26,24 @@ about:
   image : "images/beritrorbol.jpg"
 
 
-######################## Portfolio ###############################
-portfolio:
-  enable : false
-  bg_image : "images/featue-bg.jpg"
-  title : "Berit holder af naturen"
-  content : "
-  Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+# ######################## Portfolio ###############################
+# portfolio:
+#   enable : false
+#   bg_image : "images/featue-bg.jpg"
+#   title : "Berit holder af naturen"
+#   content : "
+#   Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
 
 
-  Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+#   Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
 
 
-  Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-  "
-  button:
-    enable : false
-    label : "View Works"
-    link : "project"
+#   Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+#   "
+#   button:
+#     enable : false
+#     label : "View Works"
+#     link : "project"
 
 
 ############################# Service ############################
@@ -61,7 +61,7 @@ cta:
   button:
     enable : true
     label : "Book et møde"
-    link : "contact"
+    link : "/contact/index.html"
 
 ############################# Funfacts ###############################
 funfacts:
